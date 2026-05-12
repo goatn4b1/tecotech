@@ -1,0 +1,430 @@
+#footer {
+  width: 100%;
+  overflow: hidden;
+  background-image: url(../images/map_foot.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: #fff;
+  margin-top: 0px;
+  color: #fff;
+}
+.footer-main {
+  padding: 50px 0 40px;
+}
+.box_foot_main {
+  width: 100%;
+}
+.link-footer {
+  width: 100%;
+}
+.link-footer h2 {
+  font-size: 17px;
+  text-transform: uppercase;
+  font-weight: 600;
+  position: relative;
+  padding-bottom: 5px;
+  color: #000;
+  margin-bottom: 24px;
+}
+.link-footer h2::before {
+  content: "";
+  background-color: #20539c;
+  width: 60px;
+  height: 2px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+.link-footer  li {
+  color: #000;
+  padding-left: 18px;
+  font-size: 15px;
+  line-height: 26px;
+  position: relative;
+  font-weight: 300;
+}
+.link-footer  li img{
+  height: 15px;
+  width: unset !important;
+  fill: #20539c;
+  top: 4px;
+  position: absolute;
+  left: 0;
+}
+.link-footer .list-link li {
+  color: #fff;
+  margin-bottom: 0px;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+.link-footer .list-link li a {
+  text-transform: capitalize;
+  color: #000;
+  padding: 0;
+  display: block;
+  transition: 0.1s all ease 0s;
+  line-height: 32px;
+  font-size: 15px;
+  font-weight: 300;
+  display: flex;
+  align-items: center;
+}
+.link-footer .list-link li a i {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  text-align: center;
+  line-height: 12px;
+  font-size: 13px;
+  margin-right: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 2px;
+  font-weight: 600;
+  margin-right: 6px;
+}
+.dmca {
+  display: block;
+  text-align: right;
+  margin-top: 10px;
+}
+.footer_bottom {
+  background-image: url(../images/bg_coppy.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  padding: 17px 0;
+}
+.coppy_right {
+  text-align: center;
+  line-height: 26px;
+  color: #000;
+}
+
+
+#button-contact-vr {
+bottom: -15px;
+  left: 10px;
+  margin: -25px;
+    margin-bottom: -25px;
+  transform: scale(0.8);
+  margin-bottom: 0px !important;
+  position: fixed;
+  z-index: 99999;
+}
+
+#gom-all-in-one #viber-vr {
+  transition: 1.3s all;
+  -moz-transition: 1.3s all;
+  -webkit-transition: 1.3s all;
+}
+
+#button-contact-vr .button-contact {
+  position: relative;
+  margin-top: -5px;
+}
+
+#button-contact-vr .button-contact .phone-vr {
+  position: relative;
+  visibility: visible;
+  background-color: transparent;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  z-index: 11;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transition: visibility .5s;
+  left: 0;
+  bottom: 0;
+  display: block;
+}
+
+#viber-vr .phone-vr-circle-fill {
+  box-shadow: 0 0 0 0 #2196f3;
+  background-color: rgba(33, 150, 243, 0.7);
+}
+
+.phone-vr-circle-fill {
+  width: 65px;
+  height: 65px;
+  top: 12px;
+  left: 12px;
+  position: absolute;
+  box-shadow: 0 0 0 0 #c31d1d;
+  background-color: rgba(230, 8, 8, 0.7);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  -webkit-animation: phone-vr-circle-fill 2.3s infinite ease-in-out;
+  animation: phone-vr-circle-fill 2.3s infinite ease-in-out;
+  transition: all .5s;
+  -webkit-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-animuiion: zoom 1.3s infinite;
+  animation: zoom 1.3s infinite;
+}
+
+#button-contact-vr .button-contact .phone-vr {
+  position: relative;
+  visibility: visible;
+  background-color: transparent;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+  z-index: 11;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transition: visibility .5s;
+  left: 0;
+  bottom: 0;
+  display: block;
+}
+
+.phone-vr-img-circle a {
+  line-height: 30px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.phone-vr-img-circle a i{
+  font-size: 17px;
+}
+.phone-vr-img-circle img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+#gom-all-in-one #zalo-vr {
+  transition: 1s all;
+  -moz-transition: 1s all;
+  -webkit-transition: 1s all;
+}
+
+#button-contact-vr .button-contact {
+  position: relative;
+  margin-top: -5px;
+}
+
+#zalo-vr .phone-vr-circle-fill {
+  box-shadow: 0 0 0 0 #2196f3;
+  background-color: rgba(33, 150, 243, 0.7);
+}
+
+#gom-all-in-one #phone-vr {
+  transition: 0.7s all;
+  -moz-transition: 0.7s all;
+  -webkit-transition: 0.7s all;
+}
+
+#phone-vr .phone-vr-circle-fill {
+  opacity: 0.7;
+  box-shadow: 0 0 0 0 #dd2223;
+}
+
+.phone-bar a,
+#phone-vr .phone-vr-circle-fill,
+#phone-vr .phone-vr-img-circle,
+#phone-vr .phone-bar a {
+  background-color: #dd2223;
+}
+
+.phone-bar a,
+#phone-vr .phone-vr-circle-fill,
+#phone-vr .phone-vr-img-circle,
+#phone-vr .phone-bar a {
+  background-color: #f6b418;
+}
+
+#phone-vr .phone-vr-circle-fill {
+  opacity: 0.7;
+  box-shadow: 0 0 0 0 #f6b418;
+}
+
+.phone-vr-img-circle {
+  background-color: #e60808;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  top: 25px;
+  left: 25px;
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  -webkit-animation: phonering-alo-circle-img-anim 1s infinite ease-in-out;
+  animation: phone-vr-circle-fill 1s infinite ease-in-out;
+}
+
+#zalo-vr .phone-vr-img-circle {
+  background-color: #2196F3;
+}
+
+#viber-vr .phone-vr-img-circle {
+  background-color: #2196f3;
+}
+
+
+
+
+@-webkit-keyframes phone-vr-circle-fill {
+  0% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+
+  10% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+
+  20% {
+    -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+  }
+
+  30% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+
+  40% {
+    -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+  }
+
+  50% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+}
+
+@-webkit-keyframes zoom {
+  0% {
+    transform: scale(.9)
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px transparent
+  }
+
+  100% {
+    transform: scale(.9);
+    box-shadow: 0 0 0 0 transparent
+  }
+}
+
+@keyframes zoom2 {
+  0% {
+    transform: scale(.9);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px transparent
+  }
+
+  100% {
+    transform: scale(.9);
+    box-shadow: 0 0 0 0 transparent
+  }
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(.9)
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 15px transparent
+  }
+
+  100% {
+    transform: scale(.9);
+    box-shadow: 0 0 0 0 transparent
+  }
+}
+
+#phone-vr span {
+  position: absolute;
+  background: #f6b418;
+  text-decoration: none;
+  color: #fff;
+  display: inline-block;
+  text-align: center;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 1.2;
+  padding: 10px 12px 10px;
+  border-radius: 4px;
+  /* box-shadow: inset 0 -10px 0 -6px rgba(0, 0, 0, .17); */
+  margin-right: 10px;
+  width: 168px;
+  left: 100%;
+  top: 30%;
+}
+
+#phone-vr span::before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent #f6b418 transparent transparent;
+  position: absolute;
+  right: 100%;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  -ms-transition: all 200ms linear;
+  -webkit-transition: all 200ms linear;
+  transition: all 200ms linear;
+}
+
+
+.back_to_top {
+  display: inline-block;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: #2a89c3;
+  /* padding: 10.5px 15px; */
+  border-radius: 50px;
+  z-index: 99;
+  overflow: hidden;
+}
+
+.back_to_top a {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back_to_top span {
+  display: inline-block;
+  float: left;
+  line-height: 27px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: 0.5s;
+  /* width: 0; */
+}
+
+.back_to_top img {
+  width: auto;
+  /* float: left; */
+}
+
