@@ -1,8 +1,8 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import InnerHero from '@/Components/InnerHero.vue';
-import { Head } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, usePage } from '@inertiajs/vue3';
+import { ref, computed } from 'vue';
 import { 
     MapPin, 
     Phone, 
@@ -12,6 +12,12 @@ import {
     Youtube,
     Instagram
 } from 'lucide-vue-next';
+
+const page = usePage();
+const settings = computed(() => page.props.globalSettings || {});
+
+const phoneHref = computed(() => `tel:${(settings.value.site_phone || '').replace(/\s+/g, '')}`);
+const emailHref = computed(() => `mailto:${settings.value.site_email}`);
 
 const form = ref({
     name: '',
@@ -28,7 +34,7 @@ const submit = () => {
 </script>
 
 <template>
-    <MainLayout title="Liên hệ - TECOTECH">
+    <MainLayout :title="'Liên hệ - ' + (settings.site_name || 'TECOTECH')">
         <InnerHero 
             title="Liên hệ với chúng tôi" 
             subtitle="TECOTECH luôn sẵn sàng lắng nghe và giải đáp mọi thắc mắc của quý khách hàng."
@@ -54,40 +60,40 @@ const submit = () => {
                                     </div>
                                     <div class="ml-5">
                                         <h4 class="font-bold text-sm uppercase tracking-widest text-primary mb-2">Trụ sở chính</h4>
-                                        <p class="text-base text-slate-300 leading-relaxed font-normal">Ô 15 lô B KĐT Đại Kim - Định Công, P. Định Công, TP. Hà Nội</p>
+                                        <p class="text-base text-slate-300 leading-relaxed font-normal">{{ settings.site_headquarters || settings.site_address }}</p>
                                     </div>
                                 </div>
                                 
-                                <div class="flex items-start group">
+                                <div v-if="settings.site_phone" class="flex items-start group">
                                     <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300 border border-white/10">
                                         <Phone class="w-6 h-6" />
                                     </div>
                                     <div class="ml-5">
                                         <h4 class="font-bold text-sm uppercase tracking-widest text-primary mb-2">Hotline</h4>
-                                        <a href="tel:0923392868" class="text-2xl font-bold text-white hover:text-primary transition-colors">0923 392 868</a>
+                                        <a :href="phoneHref" class="text-2xl font-bold text-white hover:text-primary transition-colors">{{ settings.site_phone }}</a>
                                     </div>
                                 </div>
 
-                                <div class="flex items-start group">
+                                <div v-if="settings.site_email" class="flex items-start group">
                                     <div class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300 border border-white/10">
                                         <Mail class="w-6 h-6" />
                                     </div>
                                     <div class="ml-5">
                                         <h4 class="font-bold text-sm uppercase tracking-widest text-primary mb-2">Email</h4>
-                                        <a href="mailto:etm.ckmt@gmail.com" class="text-base text-slate-300 hover:text-white transition-colors font-normal">etm.ckmt@gmail.com</a>
+                                        <a :href="emailHref" class="text-base text-slate-300 hover:text-white transition-colors font-normal">{{ settings.site_email }}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="relative z-10 mt-16 flex space-x-5">
-                            <a href="#" class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary transition-all duration-300 border border-white/10">
+                            <a v-if="settings.site_facebook" :href="settings.site_facebook" target="_blank" class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary transition-all duration-300 border border-white/10">
                                 <Facebook class="w-5 h-5" />
                             </a>
-                            <a href="#" class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary transition-all duration-300 border border-white/10">
+                            <a v-if="settings.site_youtube" :href="settings.site_youtube" target="_blank" class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary transition-all duration-300 border border-white/10">
                                 <Youtube class="w-5 h-5" />
                             </a>
-                            <a href="#" class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary transition-all duration-300 border border-white/10">
+                            <a v-if="settings.site_instagram" :href="settings.site_instagram" target="_blank" class="w-11 h-11 rounded-xl bg-white/5 flex items-center justify-center hover:bg-primary transition-all duration-300 border border-white/10">
                                 <Instagram class="w-5 h-5" />
                             </a>
                         </div>
@@ -151,15 +157,7 @@ const submit = () => {
         </section>
 
         <!-- Map Section -->
-        <section class="h-[500px] w-full grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.1956108119777!2d105.82903731533165!3d20.984795986022067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac5df058b88d%3A0x6b772719d3a77884!2zS0RUICDEkOG6oWkgS2ltLCDEkOG7i25oIEPDtG5nLCBIb8OgbmcgTWFpLCBIw6AgTuG7mWksIFZpZXRuYW0!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy"
-            ></iframe>
+        <section class="h-[500px] w-full grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-700 overflow-hidden" v-html="settings.site_google_map">
         </section>
     </MainLayout>
 </template>

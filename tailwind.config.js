@@ -18,11 +18,11 @@ export default {
             },
             colors: {
                 primary: {
-                    DEFAULT: '#2c88c7',
-                    dark: '#1E3050',
+                    DEFAULT: '#059669',
+                    dark: '#064e3b',
                 },
                 secondary: {
-                    DEFAULT: '#fb860b',
+                    DEFAULT: '#f59e0b',
                 },
                 success: {
                     DEFAULT: '#0ea04b',
@@ -38,10 +38,10 @@ export default {
         themes: [
             {
                 tecotech: {
-                    "primary": "#2c88c7",
-                    "secondary": "#fb860b",
+                    "primary": "#059669",
+                    "secondary": "#f59e0b",
                     "accent": "#0ea04b",
-                    "neutral": "#1E3050",
+                    "neutral": "#064e3b",
                     "base-100": "#ffffff",
                     "info": "#3abff8",
                     "success": "#36d399",

@@ -114,9 +114,6 @@ const organizationSchema = computed(() => JSON.stringify({
                         <a v-if="settings.site_instagram" :href="settings.site_instagram" target="_blank" class="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-800 hover:bg-primary hover:text-white transition-all duration-300">
                             <Instagram class="w-4 h-4" />
                         </a>
-                        <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-800 hover:bg-primary hover:text-white transition-all duration-300">
-                            <ZaloIcon class="w-4 h-4" />
-                        </a>
                     </div>
                 </div>
 

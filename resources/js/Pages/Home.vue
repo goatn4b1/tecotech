@@ -48,13 +48,6 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                 </div>
                 <div class="container relative mx-auto flex h-full items-center px-4">
                     <div class="max-w-3xl space-y-6 animate-fade-in-up">
-                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/20 backdrop-blur-md border border-primary/30 text-primary-content text-xs font-bold tracking-[0.2em] uppercase">
-                            <span class="relative flex h-2 w-2">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                            </span>
-                            Công nghệ môi trường tiên tiến
-                        </div>
                         <h1 class="text-4xl md:text-7xl font-bold text-white leading-[1.1]">
                             {{ section.data.slides[0].title }}
                         </h1>
@@ -79,11 +72,11 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                 <div class="container mx-auto px-4 py-12">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                         <div class="text-center group">
-                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">15+</div>
+                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">1+</div>
                             <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Năm kinh nghiệm</p>
                         </div>
                         <div class="text-center group border-l border-slate-100">
-                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">500+</div>
+                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">50+</div>
                             <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Dự án hoàn thành</p>
                         </div>
                         <div class="text-center group border-l border-slate-100">
@@ -108,7 +101,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                             </div>
                             <div class="absolute -bottom-10 -right-10 bg-primary p-8 rounded-3xl shadow-xl hidden md:block">
                                 <div class="text-white text-center">
-                                    <div class="text-4xl font-bold">2008</div>
+                                    <div class="text-4xl font-bold">2025</div>
                                     <div class="text-sm font-medium opacity-80">Thành lập</div>
                                 </div>
                             </div>
@@ -132,7 +125,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                                         <History class="w-6 h-6" />
                                     </div>
                                     <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Kinh nghiệm</h4>
-                                    <p class="text-slate-500 text-xs leading-relaxed">Hơn 15 năm khẳng định vị thế trên thị trường.</p>
+                                    <p class="text-slate-500 text-xs leading-relaxed">Khẳng định vị thế trên thị trường.</p>
                                 </div>
                                 <div class="space-y-3">
                                     <div class="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-primary border border-slate-100">
@@ -192,18 +185,6 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                     </div>
                 </div>
             </section>
-
-            <!-- Partners Section -->
-            <section v-if="section.type === 'partners'" class="py-20 bg-white border-y border-slate-100">
-                <div class="container mx-auto px-4">
-                    <div class="text-center mb-12">
-                        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-[0.3em]">{{ section.data.title }}</h2>
-                    </div>
-                    <div class="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
-                        <img v-for="(img, idx) in section.data.images" :key="idx" :src="img" alt="Đối tác TECOTECH" class="h-8 md:h-12 w-auto object-contain hover:scale-110 transition-transform">
-                    </div>
-                </div>
-            </section>
         </template>
 
         <!-- Featured Projects -->
@@ -224,7 +205,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                         <img :src="project.image" :alt="project.title" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
                         <div class="absolute inset-0 p-8 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                            <h3 class="text-xl md:text-2xl font-bold text-white mb-4 line-clamp-2">{{ project.title }}</h3>
+                            <h3 class="text-xl md:text-2xl font-bold text-white mb-4 line-clamp-2 min-h-[3.5rem] flex items-end">{{ project.title }}</h3>
                             <Link href="/cong-trinh" class="inline-flex items-center gap-2 text-white/80 font-bold hover:text-white transition-colors group/btn">
                                 Xem chi tiết <ArrowRight class="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
                             </Link>
