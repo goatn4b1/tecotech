@@ -55,6 +55,9 @@ Route::get('/tin-tuc', function () {
 
 Route::get('/tin-tuc/{slug}', [\App\Http\Controllers\PageController::class, 'post'])->name('posts.show');
 
+Route::get('/sitemap', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'xml'])->name('sitemap.xml');
+
 Route::get('/admin', function () {
     return redirect()->route('admin.dashboard');
 });
