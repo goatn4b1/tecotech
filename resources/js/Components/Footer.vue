@@ -165,7 +165,7 @@ const organizationSchema = computed(() => JSON.stringify({
             <div class="mt-16 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs tracking-wide">
                 <p>{{ settings.footer_copyright || '© Copyright 2008 - 2024 TECOTECH. All rights reserved.' }}</p>
                 <div class="flex items-center gap-6">
-                    <span class="text-slate-500">Thiết kế bởi <strong class="text-slate-300">TECOTECH Team</strong></span>
+                    <span class="text-slate-500">Thiết kế bởi <strong class="text-slate-300">Goatn4b1</strong></span>
                     <div class="h-4 w-px bg-slate-700"></div>
                     <Link href="/sitemap" class="hover:text-white transition-colors">Sitemap</Link>
                 </div>
