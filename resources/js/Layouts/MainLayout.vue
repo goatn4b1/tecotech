@@ -73,7 +73,7 @@ const scrollTop = () => {
                 <Phone class="w-5 h-5 group-hover:animate-bounce" />
             </a>
 
-            <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" :class="buttonClass" aria-label="Zalo">
+            <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" :class="primaryButtonClass" aria-label="Zalo">
                 <ZaloIcon class="w-5 h-5" />
             </a>
 

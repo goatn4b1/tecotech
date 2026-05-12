@@ -61,7 +61,7 @@ const toggleSubMenu = (menuId) => {
                         <Youtube class="w-4 h-4" />
                     </a>
                     <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="hover:text-white transition-colors duration-200 flex items-center gap-1 font-semibold" title="Zalo">
-                        <ZaloIcon class="w-4 h-4" />
+                        <ZaloIcon class="w-4 h-4 text-[#0068FF]" />
                         <span>ZALO</span>
                     </a>
                 </div>
@@ -179,7 +179,10 @@ const toggleSubMenu = (menuId) => {
                     <div class="mt-6 flex justify-center space-x-6 text-slate-400">
                         <a v-if="settings.site_facebook" :href="settings.site_facebook" target="_blank" class="hover:text-primary transition-colors"><Facebook class="w-5 h-5" /></a>
                         <a v-if="settings.site_youtube" :href="settings.site_youtube" target="_blank" class="hover:text-primary transition-colors"><Youtube class="w-5 h-5" /></a>
-                        <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="hover:text-primary transition-colors font-bold text-xs">ZALO</a>
+                        <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1 font-bold text-xs">
+                            <ZaloIcon class="w-5 h-5 text-[#0068FF]" />
+                            <span>ZALO</span>
+                        </a>
                     </div>
                 </div>
             </div>

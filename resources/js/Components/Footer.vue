@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import ZaloIcon from '@/Components/ZaloIcon.vue';
 import { 
     MapPin, 
     Phone, 
@@ -20,6 +21,10 @@ const phone = computed(() => settings.value.site_phone || '');
 const phoneHref = computed(() => `tel:${phone.value.replace(/\s+/g, '')}`);
 const email = computed(() => settings.value.site_email || '');
 const emailHref = computed(() => `mailto:${email.value}`);
+const zaloLink = computed(() => {
+    const value = (settings.value.site_zalo || '').replace(/\s+/g, '');
+    return value.startsWith('http') ? value : `https://zalo.me/${value}`;
+});
 
 const primaryLinks = [
     { href: '/', label: 'Trang chủ' },
@@ -108,6 +113,9 @@ const organizationSchema = computed(() => JSON.stringify({
                         </a>
                         <a v-if="settings.site_instagram" :href="settings.site_instagram" target="_blank" class="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-800 hover:bg-primary hover:text-white transition-all duration-300">
                             <Instagram class="w-4 h-4" />
+                        </a>
+                        <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="h-9 w-9 flex items-center justify-center rounded-lg bg-slate-800 hover:bg-primary hover:text-white transition-all duration-300">
+                            <ZaloIcon class="w-4 h-4" />
                         </a>
                     </div>
                 </div>
