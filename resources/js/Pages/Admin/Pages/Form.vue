@@ -113,12 +113,3 @@ const selectHero = (event) => {
     min-height: 420px;
 }
 </style>
-</div>
-    </AuthenticatedLayout>
-</template>
-
-<style>
-.ck-editor__editable_inline {
-    min-height: 420px;
-}
-</style>

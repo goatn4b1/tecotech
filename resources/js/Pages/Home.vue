@@ -1,6 +1,15 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Link } from '@inertiajs/vue3';
+import { 
+    ChevronRight, 
+    History, 
+    Users, 
+    Wrench, 
+    ArrowRight,
+    Calendar,
+    Tag
+} from 'lucide-vue-next';
 
 defineProps({
     sections: {
@@ -30,147 +39,283 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
 <template>
     <MainLayout>
         <template v-for="section in sections" :key="section.id">
-            <section v-if="section.type === 'hero'" class="relative h-[400px] overflow-hidden bg-gray-900 md:h-[600px]">
+            <!-- Hero Section -->
+            <section v-if="section.type === 'hero'" class="relative min-h-[500px] md:h-[calc(100vh-80px)] max-h-[800px] overflow-hidden">
                 <div class="absolute inset-0">
-                    <img :src="section.data.slides[0].image" class="h-full w-full object-cover opacity-60" alt="TECOTECH">
+                    <img :src="section.data.slides[0].image" class="h-full w-full object-cover" alt="TECOTECH">
+                    <div class="absolute inset-0 bg-slate-900/40"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent"></div>
                 </div>
-                <div class="container relative mx-auto flex h-full flex-col justify-center px-4 text-white">
-                    <h1 class="mb-4 text-3xl font-extrabold md:text-5xl">{{ section.data.slides[0].title }}</h1>
-                    <p class="max-w-2xl text-lg md:text-xl">{{ section.data.slides[0].desc }}</p>
-                    <div class="mt-8">
-                        <Link href="/lien-he" class="rounded-full bg-primary px-8 py-3 font-bold text-white transition hover:bg-primary-dark">Liên hệ ngay</Link>
+                <div class="container relative mx-auto flex h-full items-center px-4">
+                    <div class="max-w-3xl space-y-6 animate-fade-in-up">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-primary/20 backdrop-blur-md border border-primary/30 text-primary-content text-xs font-bold tracking-[0.2em] uppercase">
+                            <span class="relative flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                            </span>
+                            Công nghệ môi trường tiên tiến
+                        </div>
+                        <h1 class="text-4xl md:text-7xl font-bold text-white leading-[1.1]">
+                            {{ section.data.slides[0].title }}
+                        </h1>
+                        <p class="text-lg md:text-xl text-slate-200 leading-relaxed max-w-2xl font-normal opacity-90">
+                            {{ section.data.slides[0].desc }}
+                        </p>
+                        <div class="pt-6 flex flex-wrap gap-4">
+                            <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-10 font-bold group shadow-xl shadow-primary/20">
+                                Liên hệ ngay
+                                <ArrowRight class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                            <Link href="/gioi-thieu" class="btn bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border-white/20 hover:border-white/40 btn-lg rounded-xl px-10">
+                                Tìm hiểu thêm
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section v-if="section.type === 'about'" class="bg-white py-16">
-                <div class="container mx-auto px-4">
-                    <div class="mb-12 text-center">
-                        <h2 class="inline-block border-b-4 border-primary pb-2 text-3xl font-bold uppercase tracking-wider text-gray-800">{{ section.data.title }}</h2>
-                        <p class="mx-auto mt-6 max-w-4xl text-lg leading-relaxed text-gray-600">{{ section.data.content }}</p>
+            <!-- Stats Section (Moved from Hero) -->
+            <section v-if="section.type === 'hero'" class="bg-white border-b border-slate-100">
+                <div class="container mx-auto px-4 py-12">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        <div class="text-center group">
+                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">15+</div>
+                            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Năm kinh nghiệm</p>
+                        </div>
+                        <div class="text-center group border-l border-slate-100">
+                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">500+</div>
+                            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Dự án hoàn thành</p>
+                        </div>
+                        <div class="text-center group border-l border-slate-100">
+                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">100%</div>
+                            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Hài lòng</p>
+                        </div>
+                        <div class="text-center group border-l border-slate-100">
+                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">Top 10</div>
+                            <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Đơn vị uy tín</p>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-                        <img :src="section.data.image" alt="Giới thiệu TECOTECH" class="rounded-lg shadow-2xl">
-                        <div class="space-y-8">
-                            <div class="flex items-start">
-                                <div class="mr-4 mt-1 rounded-lg bg-primary p-3 text-white">
-                                    <i class="fas fa-history text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-primary">25 năm kinh nghiệm</h3>
-                                    <p class="text-gray-600">Thương hiệu tin cậy trong lĩnh vực cơ khí và môi trường tại Việt Nam.</p>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section v-if="section.type === 'about'" class="bg-white py-24">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                        <div class="relative">
+                            <div class="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-2xl">
+                                <img :src="section.data.image" alt="Giới thiệu TECOTECH" class="w-full h-full object-cover">
+                            </div>
+                            <div class="absolute -bottom-10 -right-10 bg-primary p-8 rounded-3xl shadow-xl hidden md:block">
+                                <div class="text-white text-center">
+                                    <div class="text-4xl font-bold">2008</div>
+                                    <div class="text-sm font-medium opacity-80">Thành lập</div>
                                 </div>
                             </div>
-                            <div class="flex items-start">
-                                <div class="mr-4 mt-1 rounded-lg bg-primary p-3 text-white">
-                                    <i class="fas fa-users text-2xl"></i>
+                        </div>
+                        <div class="space-y-10">
+                            <div class="space-y-4">
+                                <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs py-1 px-3 bg-primary/10 rounded-full">
+                                    Về chúng tôi
                                 </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-primary">Năng lực vượt trội</h3>
-                                    <p class="text-gray-600">Đội ngũ kỹ sư và lực lượng sản xuất, thi công chuyên nghiệp.</p>
+                                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 leading-[1.2]">
+                                    {{ section.data.title }}
+                                </h2>
+                                <p class="text-slate-600 text-lg leading-relaxed font-normal">
+                                    {{ section.data.content }}
+                                </p>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="space-y-3">
+                                    <div class="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-primary border border-slate-100">
+                                        <History class="w-6 h-6" />
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Kinh nghiệm</h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed">Hơn 15 năm khẳng định vị thế trên thị trường.</p>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-primary border border-slate-100">
+                                        <Users class="w-6 h-6" />
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Đội ngũ</h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed">Kỹ sư trình độ cao, giàu kinh nghiệm thực tiễn.</p>
+                                </div>
+                                <div class="space-y-3">
+                                    <div class="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-primary border border-slate-100">
+                                        <Wrench class="w-6 h-6" />
+                                    </div>
+                                    <h4 class="text-sm font-bold text-slate-900 uppercase tracking-wide">Thiết bị</h4>
+                                    <p class="text-slate-500 text-xs leading-relaxed">Hệ thống máy móc gia công hiện đại, chính xác.</p>
                                 </div>
                             </div>
-                            <div class="flex items-start">
-                                <div class="mr-4 mt-1 rounded-lg bg-primary p-3 text-white">
-                                    <i class="fas fa-tools text-2xl"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-xl font-bold text-primary">Dịch vụ đa dạng</h3>
-                                    <p class="text-gray-600">Thi công, sản xuất các thiết bị và bồn chứa phục vụ xử lý môi trường.</p>
-                                </div>
+
+                            <div class="pt-4">
+                                <Link href="/gioi-thieu" class="inline-flex items-center gap-2 text-primary font-bold group">
+                                    Khám phá câu chuyện của chúng tôi
+                                    <ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section v-if="section.type === 'services'" class="relative bg-gray-50 bg-[url('https://cokhimoitruong.com.vn/upload/images/product_1617585689.jpg')] bg-cover bg-fixed bg-center py-16">
-                <div class="absolute inset-0 bg-primary/80"></div>
-                <div class="container relative mx-auto px-4">
-                    <div class="mb-12 text-center text-white">
-                        <h2 class="inline-block border-b-4 border-white pb-2 text-3xl font-bold uppercase tracking-wider">{{ section.data.title }}</h2>
-                        <p class="mx-auto mt-4 max-w-2xl">{{ section.data.subtitle }}</p>
+            <!-- Services Section -->
+            <section v-if="section.type === 'services'" class="py-24 bg-slate-50">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-3xl mx-auto text-center mb-16 space-y-4">
+                        <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs py-1 px-3 bg-primary/10 rounded-full">
+                            Lĩnh vực hoạt động
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-bold text-slate-900">{{ section.data.title }}</h2>
+                        <p class="text-slate-500 text-lg max-w-2xl mx-auto">{{ section.data.subtitle }}</p>
                     </div>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-4">
-                        <div v-for="service in section.data.items" :key="service.title" class="group relative overflow-hidden rounded-lg bg-white shadow-lg transition duration-300 hover:-translate-y-2">
-                            <div class="h-48 overflow-hidden">
-                                <img :src="service.image" :alt="service.title" class="h-full w-full object-cover transition duration-500 group-hover:scale-110">
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div v-for="service in section.data.items" :key="service.title" 
+                             class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100">
+                            <div class="h-52 overflow-hidden relative">
+                                <img :src="service.image" :alt="service.title" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <div class="p-4 text-center">
-                                <h3 class="text-sm font-bold uppercase text-primary md:text-base">{{ service.title }}</h3>
+                            <div class="p-6 space-y-4">
+                                <h3 class="text-lg font-bold text-slate-900 group-hover:text-primary transition-colors leading-snug min-h-[3.5rem] flex items-center">
+                                    {{ service.title }}
+                                </h3>
+                                <Link :href="service.link" class="inline-flex items-center gap-2 text-sm font-bold text-primary group/link">
+                                    Tìm hiểu thêm
+                                    <ArrowRight class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
+                                </Link>
                             </div>
-                            <Link :href="service.link" class="absolute inset-0 z-10" :aria-label="service.title"></Link>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section v-if="section.type === 'partners'" class="border-t border-gray-200 bg-gray-100 py-12">
+            <!-- Partners Section -->
+            <section v-if="section.type === 'partners'" class="py-20 bg-white border-y border-slate-100">
                 <div class="container mx-auto px-4">
-                    <div class="mb-10 text-center">
-                        <h2 class="inline-block border-b-4 border-primary pb-2 text-2xl font-bold uppercase tracking-wider text-gray-800">{{ section.data.title }}</h2>
+                    <div class="text-center mb-12">
+                        <h2 class="text-sm font-bold text-slate-400 uppercase tracking-[0.3em]">{{ section.data.title }}</h2>
                     </div>
-                    <div class="flex flex-wrap items-center justify-center gap-8 opacity-70 grayscale transition duration-500 hover:grayscale-0">
-                        <img v-for="(img, idx) in section.data.images" :key="idx" :src="img" alt="Đối tác TECOTECH" class="h-12 md:h-16">
+                    <div class="flex flex-wrap items-center justify-center gap-12 md:gap-20 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700">
+                        <img v-for="(img, idx) in section.data.images" :key="idx" :src="img" alt="Đối tác TECOTECH" class="h-8 md:h-12 w-auto object-contain hover:scale-110 transition-transform">
                     </div>
                 </div>
             </section>
         </template>
 
-        <section class="bg-white py-16">
+        <!-- Featured Projects -->
+        <section class="bg-white py-24">
             <div class="container mx-auto px-4">
-                <div class="grid grid-cols-1 gap-12 lg:grid-cols-12">
-                    <div class="lg:col-span-4">
-                        <div class="mb-8 flex items-end justify-between border-b-2 border-primary pb-2">
-                            <h2 class="text-2xl font-bold uppercase text-primary">Công trình tiêu biểu</h2>
-                            <Link href="/cong-trinh" class="text-sm text-gray-500 hover:text-primary">Xem tất cả <i class="fas fa-angle-double-right"></i></Link>
-                        </div>
-                        <div class="space-y-6">
-                            <div v-for="project in projects" :key="project.title" class="group flex gap-4">
-                                <div class="h-32 w-1/3 flex-shrink-0 overflow-hidden rounded-lg">
-                                    <img :src="project.image" :alt="project.title" class="h-full w-full object-cover transition duration-500 group-hover:scale-110">
-                                </div>
-                                <div class="w-2/3">
-                                    <h3 class="line-clamp-2 font-bold text-gray-800 transition hover:text-primary">
-                                        <Link href="/cong-trinh">{{ project.title }}</Link>
-                                    </h3>
-                                    <Link href="/cong-trinh" class="mt-2 inline-block text-sm font-semibold italic text-primary">Xem thêm <i class="fas fa-caret-right"></i></Link>
-                                </div>
-                            </div>
+                <div class="flex items-end justify-between mb-12">
+                    <div class="space-y-2">
+                        <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs">Danh mục</div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Công trình tiêu biểu</h2>
+                    </div>
+                    <Link href="/cong-trinh" class="btn btn-ghost hover:bg-slate-50 rounded-xl font-bold text-primary">
+                        Xem tất cả <ArrowRight class="ml-2 w-4 h-4" />
+                    </Link>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div v-for="project in projects" :key="project.title" class="group relative rounded-3xl overflow-hidden aspect-[16/9] shadow-lg">
+                        <img :src="project.image" :alt="project.title" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="text-xl md:text-2xl font-bold text-white mb-4 line-clamp-2">{{ project.title }}</h3>
+                            <Link href="/cong-trinh" class="inline-flex items-center gap-2 text-white/80 font-bold hover:text-white transition-colors group/btn">
+                                Xem chi tiết <ArrowRight class="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
+                            </Link>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
 
-                    <div class="lg:col-span-8">
-                        <div class="mb-8 flex items-end justify-between border-b-2 border-primary pb-2">
-                            <h2 class="text-2xl font-bold uppercase text-primary">Bài viết mới nhất</h2>
-                            <Link href="/tin-tuc" class="text-sm text-gray-500 hover:text-primary">Xem tất cả <i class="fas fa-angle-double-right"></i></Link>
+        <!-- Latest News -->
+        <section class="bg-slate-50 py-24">
+            <div class="container mx-auto px-4">
+                <div class="flex items-end justify-between mb-12">
+                    <div class="space-y-2">
+                        <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs">Cập nhật</div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Tin tức & Sự kiện</h2>
+                    </div>
+                    <Link href="/tin-tuc" class="btn btn-ghost hover:bg-white rounded-xl font-bold text-primary">
+                        Xem tất cả <ArrowRight class="ml-2 w-4 h-4" />
+                    </Link>
+                </div>
+                
+                <div v-if="featuredPosts.length" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <article v-for="post in featuredPosts" :key="post.id" 
+                             class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100 flex flex-col">
+                        <Link :href="route('posts.show', post.slug)" class="aspect-[16/10] overflow-hidden">
+                            <img :src="post.image || 'https://cokhimoitruong.com.vn/storage/post/xu-ly-khi-thai-nha-may-giay-da-1_1729845974.webp'" 
+                                 :alt="post.title" 
+                                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
+                        </Link>
+                        <div class="p-6 flex-grow flex flex-col space-y-3">
+                            <div class="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
+                                <span class="text-primary">{{ post.categoryRelation?.name || 'Tin tức' }}</span>
+                                <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+                                <span>{{ formatDate(post.created_at) }}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-slate-900 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                <Link :href="route('posts.show', post.slug)">{{ post.title }}</Link>
+                            </h3>
+                            <p class="text-slate-500 text-sm line-clamp-2 flex-grow">
+                                {{ post.excerpt }}
+                            </p>
                         </div>
-                        <div v-if="featuredPosts.length" class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                            <article v-for="post in featuredPosts" :key="post.id" class="group flex gap-4 rounded-lg border border-gray-100 bg-white p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                                <Link :href="route('posts.show', post.slug)" class="h-28 w-36 flex-shrink-0 overflow-hidden rounded-md bg-gray-100">
-                                    <img :src="post.image || 'https://cokhimoitruong.com.vn/storage/post/xu-ly-khi-thai-nha-may-giay-da-1_1729845974.webp'" :alt="post.title" class="h-full w-full object-cover transition duration-500 group-hover:scale-110">
-                                </Link>
-                                <div class="min-w-0 flex-1">
-                                    <div class="mb-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
-                                        <span class="rounded bg-primary/10 px-2 py-0.5 font-semibold text-primary">{{ post.categoryRelation?.name || post.category || 'Tin tức' }}</span>
-                                        <span>{{ formatDate(post.created_at) }}</span>
-                                    </div>
-                                    <h3 class="line-clamp-2 font-bold leading-snug text-gray-800 transition group-hover:text-primary">
-                                        <Link :href="route('posts.show', post.slug)">{{ post.title }}</Link>
-                                    </h3>
-                                    <p class="mt-2 line-clamp-2 text-sm text-gray-500">{{ post.excerpt }}</p>
-                                    <Link :href="route('posts.show', post.slug)" class="mt-2 inline-flex items-center text-sm font-semibold text-primary hover:text-secondary">
-                                        Xem thêm <i class="fas fa-caret-right ml-1"></i>
-                                    </Link>
-                                </div>
-                            </article>
-                        </div>
-                        <div v-else class="rounded-lg border border-dashed border-gray-200 p-8 text-center text-gray-500">
-                            Chưa có bài viết nào.
-                        </div>
+                    </article>
+                </div>
+                <div v-else class="bg-white rounded-3xl border-2 border-dashed border-slate-200 p-16 text-center">
+                    <p class="text-slate-400 font-medium">Nội dung đang được cập nhật...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="relative py-24 bg-slate-900 overflow-hidden">
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80" class="w-full h-full object-cover" />
+            </div>
+            <div class="container relative mx-auto px-4 text-center z-10">
+                <div class="max-w-4xl mx-auto space-y-10">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white leading-tight">
+                        Sẵn sàng triển khai giải pháp tối ưu cho doanh nghiệp của bạn?
+                    </h2>
+                    <p class="text-slate-400 text-lg md:text-xl font-normal max-w-2xl mx-auto opacity-80">
+                        Liên hệ với chuyên gia của chúng tôi để được tư vấn miễn phí về các giải pháp công nghệ môi trường và gia công cơ khí.
+                    </p>
+                    <div class="pt-6 flex justify-center gap-6 flex-wrap">
+                        <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-12 font-bold shadow-xl shadow-primary/20">
+                            Yêu cầu báo giá
+                        </Link>
+                        <a href="tel:0912345678" class="btn bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border-white/10 hover:border-white/20 btn-lg rounded-xl px-12 font-bold">
+                            Gọi ngay: 0912 345 678
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
     </MainLayout>
 </template>
+
+<style scoped>
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+</style>

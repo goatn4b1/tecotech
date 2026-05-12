@@ -11,9 +11,6 @@ const value = (key, fallback = '') => props.settings?.[key] || fallback;
 const previews = ref({
     site_logo: value('site_logo', '/images/logo.png'),
     site_favicon: value('site_favicon', '/favicon.ico'),
-    floating_zalo_image: value('floating_zalo_image'),
-    floating_messenger_image: value('floating_messenger_image'),
-    floating_facebook_image: value('floating_facebook_image'),
     dmca_image: value('dmca_image'),
     home_og_image: value('home_og_image'),
 });
@@ -35,12 +32,6 @@ const form = useForm({
     site_address: value('site_address'),
     company_name: value('company_name', 'CÔNG TY TNHH TMDV CÔNG NGHỆ KĨ THUẬT MÔI TRƯỜNG VÀ ĐÔ THỊ TECOTECH'),
     footer_copyright: value('footer_copyright'),
-    floating_zalo_image: value('floating_zalo_image'),
-    floating_zalo_image_upload: null,
-    floating_messenger_image: value('floating_messenger_image'),
-    floating_messenger_image_upload: null,
-    floating_facebook_image: value('floating_facebook_image'),
-    floating_facebook_image_upload: null,
     floating_back_to_top: value('floating_back_to_top', '1'),
     dmca_image: value('dmca_image'),
     dmca_image_upload: null,
@@ -119,33 +110,47 @@ const submit = () => {
                     </section>
 
                     <section class="bg-white p-6 shadow-sm sm:rounded-lg">
-                        <h3 class="mb-5 text-lg font-bold text-gray-900">Mạng xã hội và nút nổi</h3>
+                        <h3 class="mb-5 text-lg font-bold text-gray-900">Mạng xã hội và Nút nổi (Floating Buttons)</h3>
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-                            <input v-model="form.site_facebook" placeholder="Link Facebook" type="text" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <input v-model="form.site_messenger" placeholder="Link Messenger" type="text" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <input v-model="form.site_zalo" placeholder="Zalo ID hoặc link" type="text" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <input v-model="form.site_youtube" placeholder="Youtube" type="text" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <input v-model="form.site_instagram" placeholder="Instagram" type="text" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            <label class="flex items-center gap-2 text-sm text-gray-700">
-                                <input v-model="form.floating_back_to_top" true-value="1" false-value="" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
-                                Hiển thị nút lên đầu trang
-                            </label>
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Link Facebook</label>
+                                <input v-model="form.site_facebook" placeholder="https://facebook.com/trang-cua-ban" type="text" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                <p class="text-xs text-gray-500 italic">Hiển thị icon Facebook nổi ở góc màn hình.</p>
+                            </div>
+                            
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Link Messenger</label>
+                                <input v-model="form.site_messenger" placeholder="https://m.me/username" type="text" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                <p class="text-xs text-gray-500 italic">Dùng link m.me/username để mở trực tiếp chat.</p>
+                            </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Icon Zalo</label>
-                                <input type="file" accept="image/*" @change="selectImage($event, 'floating_zalo_image_upload', 'floating_zalo_image')" class="mt-1 block w-full text-sm text-gray-700" />
-                                <img v-if="previews.floating_zalo_image" :src="previews.floating_zalo_image" class="mt-3 h-10 w-10 rounded-full border object-cover" />
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Zalo ID hoặc Số điện thoại</label>
+                                <input v-model="form.site_zalo" placeholder="0912345678" type="text" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                <p class="text-xs text-gray-500 italic">Nhập số điện thoại Zalo để tự động tạo link chat.</p>
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Icon Messenger</label>
-                                <input type="file" accept="image/*" @change="selectImage($event, 'floating_messenger_image_upload', 'floating_messenger_image')" class="mt-1 block w-full text-sm text-gray-700" />
-                                <img v-if="previews.floating_messenger_image" :src="previews.floating_messenger_image" class="mt-3 h-10 w-10 rounded-full border object-cover" />
+
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Kênh Youtube</label>
+                                <input v-model="form.site_youtube" placeholder="https://youtube.com/@kenh-cua-ban" type="text" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                             </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Icon Facebook</label>
-                                <input type="file" accept="image/*" @change="selectImage($event, 'floating_facebook_image_upload', 'floating_facebook_image')" class="mt-1 block w-full text-sm text-gray-700" />
-                                <img v-if="previews.floating_facebook_image" :src="previews.floating_facebook_image" class="mt-3 h-10 w-10 rounded-full border object-cover" />
+
+                            <div class="space-y-2">
+                                <label class="block text-sm font-medium text-gray-700">Instagram</label>
+                                <input v-model="form.site_instagram" placeholder="https://instagram.com/username" type="text" class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
                             </div>
+
+                            <div class="flex items-center pt-6">
+                                <label class="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+                                    <input v-model="form.floating_back_to_top" true-value="1" false-value="" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
+                                    Hiển thị nút "Lên đầu trang" (Back to Top)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-100">
+                            <p class="text-sm text-amber-800">
+                                <strong>Lưu ý:</strong> Hệ thống sẽ tự động sử dụng icon chuẩn của các mạng xã hội. Bạn chỉ cần nhập đúng đường dẫn (link) hoặc số điện thoại.
+                            </p>
                         </div>
                     </section>
 
@@ -195,14 +200,6 @@ const submit = () => {
                     </div>
 
                     <button :disabled="form.processing" type="submit" class="rounded bg-gray-900 px-5 py-3 text-sm font-semibold text-white hover:bg-gray-700 disabled:opacity-60">
-                        Lưu cấu hình
-                    </button>
-                </form>
-            </div>
-        </div>
-    </AuthenticatedLayout>
-</template>
-             <button :disabled="form.processing" type="submit" class="rounded bg-gray-900 px-5 py-3 text-sm font-semibold text-white hover:bg-gray-700 disabled:opacity-60">
                         Lưu cấu hình
                     </button>
                 </form>
