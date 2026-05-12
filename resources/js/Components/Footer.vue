@@ -64,15 +64,6 @@ const organizationSchema = computed(() => JSON.stringify({
 
     <footer class="bg-slate-900 text-slate-400">
         <div class="container mx-auto px-4 pt-16 pb-8">
-            <!-- Logo Section -->
-            <div class="mb-12">
-                <Link href="/">
-                    <img :src="settings.site_logo || '/images/logo.png'" 
-                         :alt="settings.site_name || 'TECOTECH'" 
-                         class="h-14 brightness-0 invert opacity-90">
-                </Link>
-            </div>
-
             <!-- Main Footer Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-12">
                 <!-- Company Info -->
