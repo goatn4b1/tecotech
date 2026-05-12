@@ -15,6 +15,7 @@ const previews = ref({
     floating_messenger_image: value('floating_messenger_image'),
     floating_facebook_image: value('floating_facebook_image'),
     dmca_image: value('dmca_image'),
+    home_og_image: value('home_og_image'),
 });
 
 const form = useForm({
@@ -47,6 +48,10 @@ const form = useForm({
     home_meta_title: value('home_meta_title'),
     home_meta_description: value('home_meta_description'),
     home_meta_keywords: value('home_meta_keywords'),
+    home_og_image: value('home_og_image'),
+    home_og_image_upload: null,
+    home_canonical_url: value('home_canonical_url'),
+    home_meta_robots: value('home_meta_robots'),
 });
 
 const selectImage = (event, fileField, valueField) => {
@@ -159,6 +164,16 @@ const submit = () => {
 
                     <div class="bg-white p-6 shadow-sm sm:rounded-lg">
                         <h3 class="mb-5 text-lg font-bold text-gray-900">SEO Trang chủ</h3>
+                        
+                        <div class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Ảnh chia sẻ (Social Image)</label>
+                                <input type="file" accept="image/*" @change="selectImage($event, 'home_og_image_upload', 'home_og_image')" class="mt-1 block w-full text-sm text-gray-700" />
+                                <img v-if="previews.home_og_image" :src="previews.home_og_image" class="mt-3 h-32 w-auto rounded border object-cover" />
+                                <p class="mt-1 text-xs text-gray-500 italic">Dùng làm ảnh đại diện khi chia sẻ trang chủ lên Facebook/Zalo.</p>
+                            </div>
+                        </div>
+
                         <SEOForm 
                             :form="{
                                 meta_title: form.home_meta_title,

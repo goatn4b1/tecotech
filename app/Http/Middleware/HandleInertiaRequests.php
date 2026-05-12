@@ -48,8 +48,10 @@ class HandleInertiaRequests extends Middleware
                 'title' => $settings['home_meta_title'] ?? 'Tecotech - Tổng thầu EPC Xử lý môi trường & Gia công cơ khí',
                 'description' => $settings['home_meta_description'] ?? 'Tecotech chuyên cung cấp giải pháp tổng thầu EPC hệ thống xử lý nước thải, khí thải và gia công cơ khí phi tiêu chuẩn chất lượng cao.',
                 'keywords' => $settings['home_meta_keywords'] ?? 'xử lý môi trường, gia công cơ khí, xử lý nước thải, tecotech, cơ khí môi trường',
-                'image' => asset('images/logo.png'),
+                'image' => $settings['home_og_image'] ?? asset('images/logo.png'),
                 'favicon' => $settings['site_favicon'] ?? asset('favicon.ico'),
+                'canonical' => $settings['home_canonical_url'] ?? null,
+                'robots' => $settings['home_meta_robots'] ?? 'index, follow',
             ],
             'globalMenus' => Schema::hasTable('menus')
                 ? \App\Models\Menu::with('children')->whereNull('parent_id')->orderBy('order')->get()

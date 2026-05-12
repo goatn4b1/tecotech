@@ -28,7 +28,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
 </script>
 
 <template>
-    <MainLayout title="Trang chủ - TECOTECH">
+    <MainLayout>
         <template v-for="section in sections" :key="section.id">
             <section v-if="section.type === 'hero'" class="relative h-[400px] overflow-hidden bg-gray-900 md:h-[600px]">
                 <div class="absolute inset-0">

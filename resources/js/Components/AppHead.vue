@@ -19,8 +19,8 @@ const seoDescription = computed(() => props.description || defaults.value.descri
 const seoKeywords = computed(() => props.keywords || defaults.value.keywords);
 const seoImage = computed(() => props.image || defaults.value.image);
 const seoFavicon = computed(() => defaults.value.favicon);
-const seoCanonical = computed(() => props.canonical || window.location.href);
-const seoRobots = computed(() => props.robots || 'index, follow');
+const seoCanonical = computed(() => props.canonical || defaults.value.canonical || window.location.href);
+const seoRobots = computed(() => props.robots || defaults.value.robots || 'index, follow');
 </script>
 
 <template>

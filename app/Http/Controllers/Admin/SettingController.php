@@ -28,6 +28,7 @@ class SettingController extends Controller
             'floating_messenger_image_upload' => 'floating_messenger_image',
             'floating_facebook_image_upload' => 'floating_facebook_image',
             'dmca_image_upload' => 'dmca_image',
+            'home_og_image_upload' => 'home_og_image',
         ];
 
         foreach ($imageFields as $fileField => $settingKey) {
