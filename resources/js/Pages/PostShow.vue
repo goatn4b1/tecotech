@@ -18,6 +18,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
         :keywords="post.meta_keywords"
         :image="post.og_image || post.image"
         :canonical="post.canonical_url"
+        :robots="post.meta_robots"
     >
         <InnerHero
             :title="post.title"

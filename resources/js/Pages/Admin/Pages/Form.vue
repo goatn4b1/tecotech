@@ -25,6 +25,7 @@ const form = useForm({
     meta_keywords: props.pageItem?.meta_keywords || '',
     og_image: props.pageItem?.og_image || '',
     canonical_url: props.pageItem?.canonical_url || '',
+    meta_robots: props.pageItem?.meta_robots || null,
     is_active: props.pageItem ? props.pageItem.is_active : true,
 });
 
@@ -104,6 +105,15 @@ const selectHero = (event) => {
                 </form>
             </div>
         </div>
+    </AuthenticatedLayout>
+</template>
+
+<style>
+.ck-editor__editable_inline {
+    min-height: 420px;
+}
+</style>
+</div>
     </AuthenticatedLayout>
 </template>
 

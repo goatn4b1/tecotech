@@ -8,6 +8,7 @@ const props = defineProps({
     keywords: String,
     image: String,
     canonical: String,
+    robots: String,
 });
 
 const page = usePage();
@@ -19,6 +20,7 @@ const seoKeywords = computed(() => props.keywords || defaults.value.keywords);
 const seoImage = computed(() => props.image || defaults.value.image);
 const seoFavicon = computed(() => defaults.value.favicon);
 const seoCanonical = computed(() => props.canonical || window.location.href);
+const seoRobots = computed(() => props.robots || 'index, follow');
 </script>
 
 <template>
@@ -26,6 +28,7 @@ const seoCanonical = computed(() => props.canonical || window.location.href);
         <title>{{ seoTitle }}</title>
         <meta name="description" :content="seoDescription" />
         <meta name="keywords" :content="seoKeywords" />
+        <meta name="robots" :content="seoRobots" />
         <link rel="canonical" :href="seoCanonical" />
         <link rel="icon" :href="seoFavicon" />
 

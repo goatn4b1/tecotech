@@ -157,25 +157,37 @@ const submit = () => {
                         </div>
                     </section>
 
-                    <section class="bg-white p-6 shadow-sm sm:rounded-lg">
+                    <div class="bg-white p-6 shadow-sm sm:rounded-lg">
                         <h3 class="mb-5 text-lg font-bold text-gray-900">SEO Trang chủ</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Meta Title (Trang chủ)</label>
-                                <input v-model="form.home_meta_title" type="text" placeholder="Tiêu đề hiển thị trên Google" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Meta Description (Trang chủ)</label>
-                                <textarea v-model="form.home_meta_description" rows="3" placeholder="Mô tả ngắn gọn về website" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700">Meta Keywords (Trang chủ)</label>
-                                <input v-model="form.home_meta_keywords" type="text" placeholder="Từ khóa 1, từ khóa 2..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                            </div>
-                        </div>
-                    </section>
+                        <SEOForm 
+                            :form="{
+                                meta_title: form.home_meta_title,
+                                meta_description: form.home_meta_description,
+                                meta_keywords: form.home_meta_keywords,
+                                og_image: form.home_og_image,
+                                canonical_url: form.home_canonical_url,
+                                meta_robots: form.home_meta_robots
+                            }"
+                            @update:form="(updated) => {
+                                form.home_meta_title = updated.meta_title;
+                                form.home_meta_description = updated.meta_description;
+                                form.home_meta_keywords = updated.meta_keywords;
+                                form.home_og_image = updated.og_image;
+                                form.home_canonical_url = updated.canonical_url;
+                                form.home_meta_robots = updated.meta_robots;
+                            }"
+                        />
+                    </div>
 
                     <button :disabled="form.processing" type="submit" class="rounded bg-gray-900 px-5 py-3 text-sm font-semibold text-white hover:bg-gray-700 disabled:opacity-60">
+                        Lưu cấu hình
+                    </button>
+                </form>
+            </div>
+        </div>
+    </AuthenticatedLayout>
+</template>
+             <button :disabled="form.processing" type="submit" class="rounded bg-gray-900 px-5 py-3 text-sm font-semibold text-white hover:bg-gray-700 disabled:opacity-60">
                         Lưu cấu hình
                     </button>
                 </form>

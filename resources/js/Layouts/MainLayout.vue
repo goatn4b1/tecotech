@@ -34,6 +34,7 @@ const scrollTop = () => {
             :keywords="keywords" 
             :image="image" 
             :canonical="canonical" 
+            :robots="robots"
         />
 
         <div class="min-h-screen bg-gray-50 flex flex-col">

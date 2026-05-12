@@ -17,6 +17,7 @@ class Page extends Model
         'meta_keywords',
         'og_image',
         'canonical_url',
+        'meta_robots',
         'is_active',
     ];
 

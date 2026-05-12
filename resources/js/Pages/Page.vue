@@ -14,6 +14,7 @@ const props = defineProps({
         :keywords="pageItem.meta_keywords"
         :image="pageItem.og_image || pageItem.hero_image"
         :canonical="pageItem.canonical_url"
+        :robots="pageItem.meta_robots"
     >
         <InnerHero
             :title="pageItem.title"

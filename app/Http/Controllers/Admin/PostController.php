@@ -94,6 +94,7 @@ class PostController extends Controller
             'meta_keywords' => 'nullable|string|max:255',
             'og_image' => 'nullable|string|max:2048',
             'canonical_url' => 'nullable|string|max:255',
+            'meta_robots' => 'nullable|string|max:50',
             'is_active' => 'boolean',
         ]);
     }

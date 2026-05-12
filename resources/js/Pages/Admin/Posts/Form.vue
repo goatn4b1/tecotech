@@ -127,7 +127,11 @@ const categoryHelp = computed(() => {
                             <div v-if="form.errors.featured_image" class="mt-1 text-sm text-red-600">{{ form.errors.featured_image }}</div>
                         </div>
 
-                        <SEOForm :form="form" />
+                        <SEOForm 
+                            :form="form" 
+                            :title-source="form.title" 
+                            :description-source="form.excerpt"
+                        />
 
                         <button type="submit" :disabled="form.processing" class="w-full rounded bg-gray-900 px-4 py-3 text-sm font-semibold text-white hover:bg-gray-700 disabled:opacity-60">
                             {{ isEditing ? 'Lưu thay đổi' : 'Đăng bài viết' }}
