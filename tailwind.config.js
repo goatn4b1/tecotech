@@ -17,17 +17,8 @@ export default {
                 sans: ['Inter', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                primary: {
-                    DEFAULT: '#059669',
-                    dark: '#064e3b',
-                },
-                secondary: {
-                    DEFAULT: '#f59e0b',
-                },
-                success: {
-                    DEFAULT: '#0ea04b',
-                    light: '#61a83e',
-                },
+                'primary-dark': '#064e3b',
+                'success-light': '#61a83e',
             },
         },
     },
@@ -44,7 +35,7 @@ export default {
                     "neutral": "#064e3b",
                     "base-100": "#ffffff",
                     "info": "#3abff8",
-                    "success": "#36d399",
+                    "success": "#0ea04b",
                     "warning": "#fbbd23",
                     "error": "#f87272",
                 },
