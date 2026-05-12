@@ -4,9 +4,9 @@ import Footer from '@/Components/Footer.vue';
 import AppHead from '@/Components/AppHead.vue';
 import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
+import ZaloIcon from '@/Components/ZaloIcon.vue';
 import { 
     Phone, 
-    MessageCircle, 
     Facebook, 
     ChevronUp,
     MessageSquare
@@ -27,8 +27,8 @@ const buttonClass = 'group w-12 h-12 bg-white rounded-full flex items-center jus
 const primaryButtonClass = 'group w-12 h-12 bg-primary rounded-full flex items-center justify-center shadow-xl text-white hover:bg-primary-dark hover:-translate-y-1 transition-all duration-300';
 
 const phoneHref = computed(() => `tel:${(settings.value.site_phone || '').replace(/\s+/g, '')}`);
-const zaloHref = computed(() => {
-    const value = settings.value.site_zalo || '';
+const zaloLink = computed(() => {
+    const value = (settings.value.site_zalo || '').replace(/\s+/g, '');
     return value.startsWith('http') ? value : `https://zalo.me/${value}`;
 });
 const scrollTop = () => {
@@ -74,7 +74,7 @@ const scrollTop = () => {
             </a>
 
             <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" :class="buttonClass" aria-label="Zalo">
-                <MessageCircle class="w-5 h-5" />
+                <ZaloIcon class="w-5 h-5" />
             </a>
 
             <a v-if="settings.site_messenger" :href="settings.site_messenger" target="_blank" :class="buttonClass" aria-label="Messenger">

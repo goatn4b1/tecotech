@@ -1,6 +1,7 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
+import ZaloIcon from '@/Components/ZaloIcon.vue';
 import { 
     Phone, 
     Mail, 
@@ -11,8 +12,7 @@ import {
     ChevronUp, 
     Menu as MenuIcon, 
     X, 
-    Headphones,
-    MessageCircle
+    Headphones
 } from 'lucide-vue-next';
 
 const isMenuOpen = ref(false);
@@ -22,7 +22,7 @@ const page = usePage();
 const settings = computed(() => page.props.globalSettings || {});
 const menus = computed(() => page.props.globalMenus || []);
 const zaloLink = computed(() => {
-    const value = settings.value.site_zalo || '';
+    const value = (settings.value.site_zalo || '').replace(/\s+/g, '');
     return value.startsWith('http') ? value : `https://zalo.me/${value}`;
 });
 
@@ -61,7 +61,7 @@ const toggleSubMenu = (menuId) => {
                         <Youtube class="w-4 h-4" />
                     </a>
                     <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="hover:text-white transition-colors duration-200 flex items-center gap-1 font-semibold" title="Zalo">
-                        <MessageCircle class="w-4 h-4" />
+                        <ZaloIcon class="w-4 h-4" />
                         <span>ZALO</span>
                     </a>
                 </div>

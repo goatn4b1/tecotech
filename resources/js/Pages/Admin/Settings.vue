@@ -32,6 +32,7 @@ const form = useForm({
     site_address: value('site_address'),
     company_name: value('company_name', 'CÔNG TY TNHH TMDV CÔNG NGHỆ KĨ THUẬT MÔI TRƯỜNG VÀ ĐÔ THỊ TECOTECH'),
     footer_copyright: value('footer_copyright'),
+    site_google_map: value('site_google_map'),
     floating_back_to_top: value('floating_back_to_top', '1'),
     dmca_image: value('dmca_image'),
     dmca_image_upload: null,
@@ -164,6 +165,11 @@ const submit = () => {
                                 <img v-if="previews.dmca_image" :src="previews.dmca_image" class="mt-3 h-9 w-auto rounded border" />
                             </div>
                             <textarea v-model="form.footer_copyright" placeholder="Copyright" rows="3" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 md:col-span-2" />
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Mã nhúng Google Map (Iframe)</label>
+                                <textarea v-model="form.site_google_map" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder='<iframe src="..." ...></iframe>'></textarea>
+                                <p class="mt-1 text-xs text-gray-500 italic">Lấy mã nhúng từ Google Maps > Chia sẻ > Nhúng bản đồ.</p>
+                            </div>
                         </div>
                     </section>
 

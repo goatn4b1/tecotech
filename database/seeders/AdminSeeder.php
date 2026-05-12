@@ -35,7 +35,7 @@ class AdminSeeder extends Seeder
             'site_messenger' => 'https://m.me/ETM.JSC',
             'site_instagram' => 'https://www.instagram.com/etmjsc/',
             'site_youtube' => 'https://www.youtube.com/channel/UCra67lg3fKxWjjD4zBhh-mg',
-            'site_zalo' => '2174553407001576851',
+            'site_zalo' => '0923392868',
             'site_headquarters' => 'Ô 15 lô B KĐT Đại Kim - Định Công, P. Định Công, TP. Hà Nội',
             'site_address' => 'Ô 15 lô B KĐT Đại Kim - Định Công, P. Định Công, TP. Hà Nội',
             'company_name' => 'CÔNG TY TNHH TMDV CÔNG NGHỆ KĨ THUẬT MÔI TRƯỜNG VÀ ĐÔ THỊ TECOTECH',
@@ -46,6 +46,7 @@ class AdminSeeder extends Seeder
             'floating_back_to_top' => '1',
             'dmca_image' => 'https://cokhimoitruong.com.vn/storage/setting/dmca_1727943209.webp',
             'footer_copyright' => '© Copyright 2008 - 2024 TECOTECH.',
+            'site_google_map' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.2144866632426!2d105.82362037596851!3d20.98404098065494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac5df05b5f2f%3A0xb3a5043a4e98f480!2zTMO0IEIsIEvEkFQgxJDhuqFpIEtpbSAtIMSQ4buLbmggQ8O0bmcsIMSQ4buLbmggQ8O0bmcsIEhvw6BuZyBNYWksIEjDoCBO4buZaSwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1715500000000!5m2!1sen!2s" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
         ];
 
         foreach ($settings as $key => $value) {
