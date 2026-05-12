@@ -5,7 +5,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title inertia>{{ config('app.name', 'Laravel') }}</title>
+        @php
+            $metaTitle = $seo_title ?? $page['props']['seoDefaults']['title'] ?? config('app.name', 'Laravel');
+            $metaDescription = $seo_description ?? $page['props']['seoDefaults']['description'] ?? '';
+            $metaImage = $seo_image ?? $page['props']['seoDefaults']['image'] ?? '';
+            $metaCanonical = $seo_canonical ?? $page['props']['seoDefaults']['canonical'] ?? request()->url();
+        @endphp
+
+        <title inertia>{{ $metaTitle }}</title>
+        <meta name="description" content="{{ $metaDescription }}">
+        
+        <!-- Open Graph / Facebook / Zalo -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="{{ $metaTitle }}">
+        <meta property="og:description" content="{{ $metaDescription }}">
+        <meta property="og:image" content="{{ $metaImage }}">
+        <meta property="og:url" content="{{ $metaCanonical }}">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ $metaTitle }}">
+        <meta name="twitter:description" content="{{ $metaDescription }}">
+        <meta name="twitter:image" content="{{ $metaImage }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
