@@ -8,7 +8,13 @@ const props = defineProps({
 </script>
 
 <template>
-    <MainLayout :title="(pageItem.meta_title || pageItem.title) + ' - TECOTECH'">
+    <MainLayout 
+        :title="pageItem.meta_title || (pageItem.title + ' - TECOTECH')"
+        :description="pageItem.meta_description"
+        :keywords="pageItem.meta_keywords"
+        :image="pageItem.og_image || pageItem.hero_image"
+        :canonical="pageItem.canonical_url"
+    >
         <InnerHero
             :title="pageItem.title"
             :subtitle="pageItem.excerpt || ''"

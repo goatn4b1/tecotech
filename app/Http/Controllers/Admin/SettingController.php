@@ -23,6 +23,7 @@ class SettingController extends Controller
         $data = $request->except(['_token', '_method']);
         $imageFields = [
             'site_logo_upload' => 'site_logo',
+            'site_favicon_upload' => 'site_favicon',
             'floating_zalo_image_upload' => 'floating_zalo_image',
             'floating_messenger_image_upload' => 'floating_messenger_image',
             'floating_facebook_image_upload' => 'floating_facebook_image',

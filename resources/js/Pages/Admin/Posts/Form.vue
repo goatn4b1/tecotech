@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import SEOForm from '@/Components/SEOForm.vue';
 import { richEditorConfig } from '@/ckeditorUpload';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -25,6 +26,11 @@ const form = useForm({
     featured_image: null,
     excerpt: props.post?.excerpt || '',
     content: props.post?.content || '',
+    meta_title: props.post?.meta_title || '',
+    meta_description: props.post?.meta_description || '',
+    meta_keywords: props.post?.meta_keywords || '',
+    og_image: props.post?.og_image || '',
+    canonical_url: props.post?.canonical_url || '',
     is_active: props.post ? props.post.is_active : true,
 });
 
@@ -120,6 +126,8 @@ const categoryHelp = computed(() => {
                             <img v-if="previewImage || form.image" :src="previewImage || form.image" class="mt-3 h-36 w-full rounded object-cover" />
                             <div v-if="form.errors.featured_image" class="mt-1 text-sm text-red-600">{{ form.errors.featured_image }}</div>
                         </div>
+
+                        <SEOForm :form="form" />
 
                         <button type="submit" :disabled="form.processing" class="w-full rounded bg-gray-900 px-4 py-3 text-sm font-semibold text-white hover:bg-gray-700 disabled:opacity-60">
                             {{ isEditing ? 'Lưu thay đổi' : 'Đăng bài viết' }}

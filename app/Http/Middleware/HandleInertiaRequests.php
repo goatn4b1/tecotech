@@ -30,6 +30,10 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $settings = Schema::hasTable('settings')
+            ? \App\Models\Setting::all()->pluck('value', 'key')
+            : [];
+
         return [
             ...parent::share($request),
             'auth' => [
@@ -39,9 +43,14 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
             ],
-            'globalSettings' => Schema::hasTable('settings')
-                ? \App\Models\Setting::all()->pluck('value', 'key')
-                : (object) [],
+            'globalSettings' => (object) $settings,
+            'seoDefaults' => [
+                'title' => $settings['home_meta_title'] ?? 'Tecotech - Tổng thầu EPC Xử lý môi trường & Gia công cơ khí',
+                'description' => $settings['home_meta_description'] ?? 'Tecotech chuyên cung cấp giải pháp tổng thầu EPC hệ thống xử lý nước thải, khí thải và gia công cơ khí phi tiêu chuẩn chất lượng cao.',
+                'keywords' => $settings['home_meta_keywords'] ?? 'xử lý môi trường, gia công cơ khí, xử lý nước thải, tecotech, cơ khí môi trường',
+                'image' => asset('images/logo.png'),
+                'favicon' => $settings['site_favicon'] ?? asset('favicon.ico'),
+            ],
             'globalMenus' => Schema::hasTable('menus')
                 ? \App\Models\Menu::with('children')->whereNull('parent_id')->orderBy('order')->get()
                 : [],

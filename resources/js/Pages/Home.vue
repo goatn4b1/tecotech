@@ -152,7 +152,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                                 </Link>
                                 <div class="min-w-0 flex-1">
                                     <div class="mb-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
-                                        <span class="rounded bg-primary/10 px-2 py-0.5 font-semibold text-primary">{{ post.category?.name || post.category || 'Tin tức' }}</span>
+                                        <span class="rounded bg-primary/10 px-2 py-0.5 font-semibold text-primary">{{ post.categoryRelation?.name || post.category || 'Tin tức' }}</span>
                                         <span>{{ formatDate(post.created_at) }}</span>
                                     </div>
                                     <h3 class="line-clamp-2 font-bold leading-snug text-gray-800 transition group-hover:text-primary">

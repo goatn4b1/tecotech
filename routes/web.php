@@ -10,7 +10,7 @@ Route::get('/', function () {
         ? \App\Models\HomeSection::where('is_active', true)->orderBy('order')->get()
         : collect();
     $featuredPosts = Schema::hasTable('posts')
-        ? \App\Models\Post::with('category')->where('is_active', true)->latest()->limit(6)->get()
+        ? \App\Models\Post::with('categoryRelation')->where('is_active', true)->latest()->limit(6)->get()
         : collect();
 
     return Inertia::render('Home', [
@@ -46,7 +46,7 @@ Route::get('/gia-cong-co-khi', fn () => $renderPageOr('gia-cong-co-khi', 'Servic
 Route::get('/cong-trinh', fn () => $renderPageOr('cong-trinh', 'Projects'));
 
 Route::get('/tin-tuc', function () {
-    $posts = \App\Models\Post::with('category')->where('is_active', true)->orderBy('created_at', 'desc')->get();
+    $posts = \App\Models\Post::with('categoryRelation')->where('is_active', true)->orderBy('created_at', 'desc')->get();
 
     return Inertia::render('News', [
         'posts' => $posts,

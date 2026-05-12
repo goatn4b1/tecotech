@@ -19,7 +19,7 @@ class PageController extends Controller
 
     public function post(string $slug)
     {
-        $post = Post::with('category')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+        $post = Post::with('categoryRelation')->where('slug', $slug)->where('is_active', true)->firstOrFail();
 
         return Inertia::render('PostShow', [
             'post' => $post,

@@ -10,6 +10,7 @@ const props = defineProps({
 const value = (key, fallback = '') => props.settings?.[key] || fallback;
 const previews = ref({
     site_logo: value('site_logo', '/images/logo.png'),
+    site_favicon: value('site_favicon', '/favicon.ico'),
     floating_zalo_image: value('floating_zalo_image'),
     floating_messenger_image: value('floating_messenger_image'),
     floating_facebook_image: value('floating_facebook_image'),
@@ -20,6 +21,8 @@ const form = useForm({
     site_name: value('site_name', 'TECOTECH'),
     site_logo: value('site_logo', '/images/logo.png'),
     site_logo_upload: null,
+    site_favicon: value('site_favicon', '/favicon.ico'),
+    site_favicon_upload: null,
     site_phone: value('site_phone'),
     site_email: value('site_email'),
     site_facebook: value('site_facebook'),
@@ -40,6 +43,10 @@ const form = useForm({
     floating_back_to_top: value('floating_back_to_top', '1'),
     dmca_image: value('dmca_image'),
     dmca_image_upload: null,
+    // Home SEO
+    home_meta_title: value('home_meta_title'),
+    home_meta_description: value('home_meta_description'),
+    home_meta_keywords: value('home_meta_keywords'),
 });
 
 const selectImage = (event, fileField, valueField) => {
@@ -81,6 +88,11 @@ const submit = () => {
                                 <label class="block text-sm font-medium text-gray-700">Logo</label>
                                 <input type="file" accept="image/*" @change="selectImage($event, 'site_logo_upload', 'site_logo')" class="mt-1 block w-full text-sm text-gray-700" />
                                 <img v-if="previews.site_logo" :src="previews.site_logo" class="mt-3 h-14 w-auto rounded border bg-white p-1" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Favicon (.ico, .png)</label>
+                                <input type="file" accept="image/*" @change="selectImage($event, 'site_favicon_upload', 'site_favicon')" class="mt-1 block w-full text-sm text-gray-700" />
+                                <img v-if="previews.site_favicon" :src="previews.site_favicon" class="mt-3 h-8 w-8 rounded border bg-white p-1" />
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Điện thoại</label>
@@ -142,6 +154,24 @@ const submit = () => {
                                 <img v-if="previews.dmca_image" :src="previews.dmca_image" class="mt-3 h-9 w-auto rounded border" />
                             </div>
                             <textarea v-model="form.footer_copyright" placeholder="Copyright" rows="3" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 md:col-span-2" />
+                        </div>
+                    </section>
+
+                    <section class="bg-white p-6 shadow-sm sm:rounded-lg">
+                        <h3 class="mb-5 text-lg font-bold text-gray-900">SEO Trang chủ</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Meta Title (Trang chủ)</label>
+                                <input v-model="form.home_meta_title" type="text" placeholder="Tiêu đề hiển thị trên Google" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Meta Description (Trang chủ)</label>
+                                <textarea v-model="form.home_meta_description" rows="3" placeholder="Mô tả ngắn gọn về website" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Meta Keywords (Trang chủ)</label>
+                                <input v-model="form.home_meta_keywords" type="text" placeholder="Từ khóa 1, từ khóa 2..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                            </div>
                         </div>
                     </section>
 

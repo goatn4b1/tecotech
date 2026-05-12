@@ -15,7 +15,7 @@ class PostController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Posts/Index', [
-            'posts' => Post::with('category')->latest()->get(),
+            'posts' => Post::with('categoryRelation')->latest()->get(),
         ]);
     }
 
@@ -89,6 +89,11 @@ class PostController extends Controller
             'featured_image' => 'nullable|image|max:5120',
             'excerpt' => 'nullable|string',
             'content' => 'nullable|string',
+            'meta_title' => 'nullable|string|max:255',
+            'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string|max:255',
+            'og_image' => 'nullable|string|max:2048',
+            'canonical_url' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
     }

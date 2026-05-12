@@ -1,11 +1,16 @@
 <script setup>
 import Header from '@/Components/Header.vue';
 import Footer from '@/Components/Footer.vue';
-import { Head, usePage } from '@inertiajs/vue3';
+import AppHead from '@/Components/AppHead.vue';
+import { usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 defineProps({
     title: String,
+    description: String,
+    keywords: String,
+    image: String,
+    canonical: String,
 });
 
 const page = usePage();
@@ -23,7 +28,13 @@ const scrollTop = () => {
 
 <template>
     <div>
-        <Head :title="title" />
+        <AppHead 
+            :title="title" 
+            :description="description" 
+            :keywords="keywords" 
+            :image="image" 
+            :canonical="canonical" 
+        />
 
         <div class="min-h-screen bg-gray-50 flex flex-col">
             <Header />

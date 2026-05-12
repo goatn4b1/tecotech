@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import SEOForm from '@/Components/SEOForm.vue';
 import { richEditorConfig } from '@/ckeditorUpload';
 import { Ckeditor } from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -21,6 +22,9 @@ const form = useForm({
     hero_upload: null,
     meta_title: props.pageItem?.meta_title || '',
     meta_description: props.pageItem?.meta_description || '',
+    meta_keywords: props.pageItem?.meta_keywords || '',
+    og_image: props.pageItem?.og_image || '',
+    canonical_url: props.pageItem?.canonical_url || '',
     is_active: props.pageItem ? props.pageItem.is_active : true,
 });
 
@@ -87,14 +91,8 @@ const selectHero = (event) => {
                             <input v-model="form.hero_image" type="hidden" />
                             <img v-if="heroPreview || form.hero_image" :src="heroPreview || form.hero_image" class="mt-3 h-32 w-full rounded object-cover" />
                         </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Meta title</label>
-                            <input v-model="form.meta_title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-700">Meta description</label>
-                            <textarea v-model="form.meta_description" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
-                        </div>
+                        <SEOForm :form="form" />
+
                         <label class="flex items-center gap-2 text-sm text-gray-700">
                             <input v-model="form.is_active" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
                             Hiển thị

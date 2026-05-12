@@ -12,7 +12,13 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
 </script>
 
 <template>
-    <MainLayout :title="post.title + ' - TECOTECH'">
+    <MainLayout 
+        :title="post.meta_title || (post.title + ' - TECOTECH')"
+        :description="post.meta_description"
+        :keywords="post.meta_keywords"
+        :image="post.og_image || post.image"
+        :canonical="post.canonical_url"
+    >
         <InnerHero
             :title="post.title"
             :subtitle="post.excerpt || ''"
@@ -23,7 +29,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
             <div class="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
                 <article class="lg:col-span-2">
                     <div class="mb-8 flex flex-wrap items-center gap-3 text-sm text-gray-500">
-                        <span class="rounded-full bg-primary/10 px-3 py-1 font-semibold text-primary">{{ post.category?.name || post.category || 'Tin tuc' }}</span>
+                        <span class="rounded-full bg-primary/10 px-3 py-1 font-semibold text-primary">{{ post.categoryRelation?.name || post.category || 'Tin tuc' }}</span>
                         <span>{{ formatDate(post.created_at) }}</span>
                     </div>
                     <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary prose-img:rounded-lg" v-html="post.content"></div>

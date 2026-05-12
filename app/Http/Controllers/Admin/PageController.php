@@ -83,6 +83,9 @@ class PageController extends Controller
             'hero_upload' => 'nullable|image|max:5120',
             'meta_title' => 'nullable|string|max:255',
             'meta_description' => 'nullable|string',
+            'meta_keywords' => 'nullable|string|max:255',
+            'og_image' => 'nullable|string|max:2048',
+            'canonical_url' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
     }
