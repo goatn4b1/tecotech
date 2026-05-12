@@ -55,7 +55,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                             {{ section.data.slides[0].desc }}
                         </p>
                         <div class="pt-6 flex flex-wrap gap-4">
-                            <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-10 font-bold group shadow-xl shadow-primary/20">
+                            <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-10 font-bold group shadow-xl shadow-primary/30">
                                 Liên hệ ngay
                                 <ArrowRight class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
@@ -101,8 +101,8 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                             </div>
                             <div class="absolute -bottom-10 -right-10 bg-primary p-8 rounded-3xl shadow-xl hidden md:block">
                                 <div class="text-white text-center">
+                                    <div class="text-sm font-medium opacity-80 uppercase tracking-widest mb-1">Thành lập</div>
                                     <div class="text-4xl font-bold">2025</div>
-                                    <div class="text-sm font-medium opacity-80">Thành lập</div>
                                 </div>
                             </div>
                         </div>
@@ -271,7 +271,7 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                         Liên hệ với chuyên gia của chúng tôi để được tư vấn miễn phí về các giải pháp công nghệ môi trường và gia công cơ khí.
                     </p>
                     <div class="pt-6 flex justify-center gap-6 flex-wrap">
-                        <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-12 font-bold shadow-xl shadow-primary/20">
+                        <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-12 font-bold shadow-xl shadow-primary/30">
                             Yêu cầu báo giá
                         </Link>
                         <a href="tel:0912345678" class="btn bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border-white/10 hover:border-white/20 btn-lg rounded-xl px-12 font-bold">

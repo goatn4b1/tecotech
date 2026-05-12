@@ -157,7 +157,14 @@ const submit = () => {
         </section>
 
         <!-- Map Section -->
-        <section class="h-[500px] w-full grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-700 overflow-hidden" v-html="settings.site_google_map">
+        <section class="h-[500px] w-full grayscale contrast-125 opacity-90 hover:grayscale-0 hover:opacity-100 transition-all duration-700 overflow-hidden contact-map" v-html="settings.site_google_map">
         </section>
     </MainLayout>
 </template>
+
+<style scoped>
+.contact-map :deep(iframe) {
+    width: 100% !important;
+    height: 100% !important;
+}
+</style>

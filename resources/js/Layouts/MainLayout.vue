@@ -58,7 +58,7 @@ const scrollTop = () => {
         </div>
 
         <!-- Floating Action Buttons -->
-        <div class="fixed bottom-8 right-6 z-50 flex flex-col space-y-4">
+        <div class="fixed bottom-16 right-6 z-50 flex flex-col space-y-4">
             <button 
                 v-if="settings.floating_back_to_top && (settings.site_phone || settings.site_zalo || settings.site_messenger || settings.site_facebook)" 
                 type="button" 

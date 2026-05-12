@@ -59,11 +59,10 @@ const formatDate = (dateString) => {
                             </h2>
                             <p class="text-slate-500 mb-10 leading-relaxed line-clamp-3 font-normal">{{ featuredPost.excerpt }}</p>
                             <div>
-                                <Link :href="route('posts.show', featuredPost.slug)" class="btn btn-primary btn-lg rounded-xl px-10 font-bold shadow-xl shadow-primary/20 flex items-center justify-center gap-2 w-full sm:w-auto">
-                                    Đọc tiếp <ArrowRight class="w-5 h-5" />
-                                </Link>
-                            </div>
-                        </div>
+                               <Link :href="route('posts.show', featuredPost.slug)" class="btn btn-primary btn-lg rounded-xl px-10 font-bold shadow-xl shadow-primary/30 flex items-center justify-center gap-2 w-full sm:w-auto">
+                                   Đọc tiếp <ArrowRight class="w-5 h-5" />
+                               </Link>
+                            </div>                        </div>
                     </div>
                 </div>
 

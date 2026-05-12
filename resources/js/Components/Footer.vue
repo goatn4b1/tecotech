@@ -161,7 +161,7 @@ const organizationSchema = computed(() => JSON.stringify({
                         </h3>
                         <div class="h-1 w-10 bg-primary rounded-full -mt-4 mb-6"></div>
                     </div>
-                    <div class="rounded-xl overflow-hidden border border-slate-800 shadow-2xl h-[200px]" v-html="settings.site_google_map">
+                    <div class="rounded-xl overflow-hidden border border-slate-800 shadow-2xl h-[200px] footer-map" v-html="settings.site_google_map">
                     </div>
                 </div>
             </div>
@@ -178,3 +178,10 @@ const organizationSchema = computed(() => JSON.stringify({
         </div>
     </footer>
 </template>
+
+<style scoped>
+.footer-map :deep(iframe) {
+    width: 100% !important;
+    height: 100% !important;
+}
+</style>
