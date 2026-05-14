@@ -26,20 +26,35 @@ const zaloLink = computed(() => {
     return value.startsWith('http') ? value : `https://zalo.me/${value}`;
 });
 
-const primaryLinks = [
+const parseLinks = (linksString, defaults) => {
+    if (!linksString) return defaults;
+    try {
+        return JSON.parse(linksString);
+    } catch (e) {
+        if (typeof linksString === 'string' && linksString.includes('|')) {
+            return linksString.split('\n').filter(line => line.trim()).map(line => {
+                const [label, href] = line.split('|').map(part => part.trim());
+                return { label, href: href || '#' };
+            });
+        }
+        return defaults;
+    }
+};
+
+const primaryLinks = computed(() => parseLinks(settings.value.footer_links_column_1, [
     { href: '/', label: 'Trang chủ' },
     { href: '/moi-truong', label: 'Tổng thầu EPC về môi trường' },
     { href: '/gia-cong-co-khi', label: 'Gia công cơ khí' },
     { href: '/cong-trinh', label: 'Công trình' },
     { href: '/tuyen-dung', label: 'Tuyển dụng' },
-];
+]));
 
-const policyLinks = [
+const policyLinks = computed(() => parseLinks(settings.value.footer_links_column_2, [
     { href: '/chinh-sach-ban-hang', label: 'Chính sách bán hàng' },
     { href: '/chinh-sach-san-pham', label: 'Chính sách về sản phẩm' },
     { href: '/chinh-sach-bao-mat', label: 'Chính sách bảo mật' },
     { href: '/an-toan-thong-tin', label: 'An toàn thông tin' },
-];
+]));
 
 const organizationSchema = computed(() => JSON.stringify({
     '@context': 'https://schema.org',

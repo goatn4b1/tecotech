@@ -1,5 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import SEOForm from '@/Components/SEOForm.vue';
 import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
@@ -8,6 +9,37 @@ const props = defineProps({
 });
 
 const value = (key, fallback = '') => props.settings?.[key] || fallback;
+
+const parseJSON = (str, fallback) => {
+    if (!str) return fallback;
+    try {
+        return JSON.parse(str);
+    } catch (e) {
+        if (typeof str === 'string' && str.includes('|')) {
+            return str.split('\n').filter(line => line.trim()).map(line => {
+                const [label, href] = line.split('|').map(part => part.trim());
+                return { label, href: href || '#' };
+            });
+        }
+        return fallback;
+    }
+};
+
+const defaultCol1 = [
+    { href: '/', label: 'Trang chủ' },
+    { href: '/moi-truong', label: 'Tổng thầu EPC về môi trường' },
+    { href: '/gia-cong-co-khi', label: 'Gia công cơ khí' },
+    { href: '/cong-trinh', label: 'Công trình' },
+    { href: '/tuyen-dung', label: 'Tuyển dụng' },
+];
+
+const defaultCol2 = [
+    { href: '/chinh-sach-ban-hang', label: 'Chính sách bán hàng' },
+    { href: '/chinh-sach-san-pham', label: 'Chính sách về sản phẩm' },
+    { href: '/chinh-sach-bao-mat', label: 'Chính sách bảo mật' },
+    { href: '/an-toan-thong-tin', label: 'An toàn thông tin' },
+];
+
 const previews = ref({
     site_logo: value('site_logo', '/images/logo.png'),
     site_favicon: value('site_favicon', '/favicon.ico'),
@@ -31,6 +63,8 @@ const form = useForm({
     site_headquarters: value('site_headquarters'),
     site_address: value('site_address'),
     company_name: value('company_name', 'CÔNG TY TNHH TMDV CÔNG NGHỆ KĨ THUẬT MÔI TRƯỜNG VÀ ĐÔ THỊ TECOTECH'),
+    footer_links_column_1: parseJSON(value('footer_links_column_1'), defaultCol1),
+    footer_links_column_2: parseJSON(value('footer_links_column_2'), defaultCol2),
     footer_copyright: value('footer_copyright'),
     site_google_map: value('site_google_map'),
     floating_back_to_top: value('floating_back_to_top', '1'),
@@ -56,7 +90,11 @@ const selectImage = (event, fileField, valueField) => {
 };
 
 const submit = () => {
-    form.transform((data) => data).post(route('admin.settings.update'), {
+    form.transform((data) => ({
+        ...data,
+        footer_links_column_1: JSON.stringify(data.footer_links_column_1),
+        footer_links_column_2: JSON.stringify(data.footer_links_column_2),
+    })).post(route('admin.settings.update'), {
         forceFormData: true,
         preserveScroll: true,
     });
@@ -159,6 +197,49 @@ const submit = () => {
                         <h3 class="mb-5 text-lg font-bold text-gray-900">Footer</h3>
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                             <input v-model="form.company_name" placeholder="Tên công ty" type="text" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 md:col-span-2" />
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Liên kết (Cột 1)</label>
+                                <div class="space-y-2 mb-2">
+                                    <div v-for="(link, index) in form.footer_links_column_1" :key="index" class="flex gap-2 items-center">
+                                        <input v-model="link.label" placeholder="Tên hiển thị" type="text" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        <input v-model="link.href" placeholder="Đường dẫn" type="text" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        <button @click.prevent="form.footer_links_column_1.splice(index, 1)" class="text-red-500 hover:text-red-700 p-2" title="Xóa">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button @click.prevent="form.footer_links_column_1.push({label: '', href: ''})" class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Thêm liên kết
+                                </button>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Thông tin (Cột 2)</label>
+                                <div class="space-y-2 mb-2">
+                                    <div v-for="(link, index) in form.footer_links_column_2" :key="index" class="flex gap-2 items-center">
+                                        <input v-model="link.label" placeholder="Tên hiển thị" type="text" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        <input v-model="link.href" placeholder="Đường dẫn" type="text" class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm" />
+                                        <button @click.prevent="form.footer_links_column_2.splice(index, 1)" class="text-red-500 hover:text-red-700 p-2" title="Xóa">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button @click.prevent="form.footer_links_column_2.push({label: '', href: ''})" class="text-sm text-indigo-600 hover:text-indigo-800 flex items-center gap-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Thêm liên kết
+                                </button>
+                            </div>
+
                             <div>
                                 <label class="block text-sm font-medium text-gray-700">Ảnh DMCA/chứng nhận</label>
                                 <input type="file" accept="image/*" @change="selectImage($event, 'dmca_image_upload', 'dmca_image')" class="mt-1 block w-full text-sm text-gray-700" />
