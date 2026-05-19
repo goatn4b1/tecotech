@@ -130,62 +130,81 @@ const toggleSubMenu = (menuId) => {
             </button>
         </div>
 
-        <!-- Mobile Menu Drawer (Overlay style) -->
-        <div v-if="isMenuOpen" 
-             class="fixed inset-x-0 bottom-0 top-[64px] z-[110] bg-slate-900/50 backdrop-blur-sm lg:hidden transition-opacity duration-300"
-             @click="isMenuOpen = false">
-        </div>
-        
-        <div class="fixed inset-x-0 bottom-0 top-[64px] z-[120] bg-white lg:hidden shadow-2xl transform transition-transform duration-300 ease-in-out sm:left-auto sm:w-[340px]"
-             :class="isMenuOpen ? 'translate-x-0' : 'translate-x-full'">
-            <div class="h-full flex flex-col overflow-y-auto">
-                <div class="p-6 space-y-2">
-                    <div v-for="menu in menus" :key="menu.id" class="border-b border-slate-50 last:border-0">
-                        <template v-if="!menu.children || menu.children.length === 0">
-                            <Link :href="menu.link" 
-                                  @click="isMenuOpen = false"
-                                  class="block py-4 text-sm font-bold text-slate-700 uppercase tracking-wider hover:text-primary transition-colors">
-                                {{ menu.name }}
-                            </Link>
-                        </template>
-                        <template v-else>
-                            <div class="py-4">
-                                <button @click="toggleSubMenu(menu.id)" 
-                                        class="flex justify-between items-center w-full text-sm font-bold text-slate-700 uppercase tracking-wider hover:text-primary transition-colors focus:outline-none">
-                                    {{ menu.name }}
-                                    <ChevronDown class="w-4 h-4 transition-transform duration-300" :class="activeSubMenu === menu.id ? 'rotate-180' : ''" />
-                                </button>
-                                <div v-show="activeSubMenu === menu.id" class="mt-2 ml-4 space-y-1 border-l-2 border-slate-100">
-                                    <Link v-for="child in menu.children" 
-                                          :key="child.id" 
-                                          :href="child.link" 
-                                          @click="isMenuOpen = false"
-                                          class="block py-3 px-4 text-sm font-semibold text-slate-500 hover:text-primary hover:bg-slate-50 transition-all rounded-r-lg">
-                                        {{ child.name }}
-                                    </Link>
-                                </div>
+    </header>
+
+    <Teleport to="body">
+        <div v-if="isMenuOpen" class="fixed inset-0 z-[9998] bg-slate-950/60 backdrop-blur-sm lg:hidden" @click="isMenuOpen = false"></div>
+
+        <aside
+            class="fixed bottom-0 right-0 top-0 z-[9999] flex w-full max-w-[360px] flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out lg:hidden"
+            :class="isMenuOpen ? 'translate-x-0' : 'translate-x-full'"
+            aria-label="Menu mobile"
+        >
+            <div class="flex items-center justify-between border-b border-slate-100 px-5 py-4">
+                <Link href="/" class="block" @click="isMenuOpen = false">
+                    <img
+                        :src="settings.site_logo || '/images/logo.png'"
+                        :alt="settings.site_name || 'TECOTECH'"
+                        class="h-11 w-auto"
+                    >
+                </Link>
+                <button type="button" class="rounded-lg p-2 text-slate-700 hover:bg-slate-100" aria-label="Đóng menu" @click="isMenuOpen = false">
+                    <X class="h-6 w-6" />
+                </button>
+            </div>
+
+            <div class="flex-1 overflow-y-auto px-5 py-4">
+                <div v-for="menu in menus" :key="menu.id" class="border-b border-slate-100 last:border-0">
+                    <template v-if="!menu.children || menu.children.length === 0">
+                        <Link
+                            :href="menu.link"
+                            @click="isMenuOpen = false"
+                            class="block py-4 text-sm font-bold uppercase tracking-wider text-slate-800 hover:text-primary"
+                        >
+                            {{ menu.name }}
+                        </Link>
+                    </template>
+
+                    <template v-else>
+                        <div class="py-4">
+                            <button
+                                type="button"
+                                @click="toggleSubMenu(menu.id)"
+                                class="flex w-full items-center justify-between text-left text-sm font-bold uppercase tracking-wider text-slate-800 hover:text-primary"
+                            >
+                                <span>{{ menu.name }}</span>
+                                <ChevronDown class="h-4 w-4 transition-transform duration-300" :class="activeSubMenu === menu.id ? 'rotate-180' : ''" />
+                            </button>
+                            <div v-show="activeSubMenu === menu.id" class="mt-3 border-l-2 border-primary/20 pl-4">
+                                <Link
+                                    v-for="child in menu.children"
+                                    :key="child.id"
+                                    :href="child.link"
+                                    @click="isMenuOpen = false"
+                                    class="block rounded-r-lg px-3 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-primary"
+                                >
+                                    {{ child.name }}
+                                </Link>
                             </div>
-                        </template>
-                    </div>
-                </div>
-                
-                <div class="mt-auto p-6 bg-slate-50">
-                    <Link href="/tu-van" 
-                          @click="isMenuOpen = false"
-                          class="btn btn-secondary w-full rounded-xl font-bold gap-2">
-                        <Headphones class="w-5 h-5" />
-                        Tư vấn miễn phí
-                    </Link>
-                    <div class="mt-6 flex justify-center space-x-6 text-slate-400">
-                        <a v-if="settings.site_facebook" :href="settings.site_facebook" target="_blank" class="hover:text-primary transition-colors"><Facebook class="w-5 h-5" /></a>
-                        <a v-if="settings.site_youtube" :href="settings.site_youtube" target="_blank" class="hover:text-primary transition-colors"><Youtube class="w-5 h-5" /></a>
-                        <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="hover:text-primary transition-colors flex items-center gap-1 font-bold text-xs">
-                            <ZaloIcon class="w-5 h-5 text-[#0068FF]" />
-                            <span>ZALO</span>
-                        </a>
-                    </div>
+                        </div>
+                    </template>
                 </div>
             </div>
-        </div>
-    </header>
+
+            <div class="border-t border-slate-100 bg-slate-50 p-5">
+                <Link href="/tu-van" @click="isMenuOpen = false" class="btn btn-secondary w-full rounded-xl font-bold gap-2">
+                    <Headphones class="w-5 h-5" />
+                    Tư vấn miễn phí
+                </Link>
+                <div class="mt-5 flex justify-center space-x-6 text-slate-500">
+                    <a v-if="settings.site_facebook" :href="settings.site_facebook" target="_blank" class="hover:text-primary"><Facebook class="w-5 h-5" /></a>
+                    <a v-if="settings.site_youtube" :href="settings.site_youtube" target="_blank" class="hover:text-primary"><Youtube class="w-5 h-5" /></a>
+                    <a v-if="settings.site_zalo" :href="zaloLink" target="_blank" class="flex items-center gap-1 text-xs font-bold hover:text-primary">
+                        <ZaloIcon class="w-5 h-5 text-[#0068FF]" />
+                        <span>ZALO</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+    </Teleport>
 </template>
