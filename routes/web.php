@@ -57,6 +57,15 @@ Route::get('/tin-tuc/{slug}', [\App\Http\Controllers\PageController::class, 'pos
 
 Route::get('/sitemap', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'xml'])->name('sitemap.xml');
+Route::get('/robots.txt', function () {
+    return response(
+        "User-agent: *\n".
+        "Allow: /\n".
+        "Sitemap: ".route('sitemap.xml')."\n",
+        200,
+        ['Content-Type' => 'text/plain']
+    );
+});
 
 Route::get('/admin', function () {
     return redirect()->route('admin.dashboard');

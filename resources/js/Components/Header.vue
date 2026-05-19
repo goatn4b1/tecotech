@@ -132,11 +132,11 @@ const toggleSubMenu = (menuId) => {
 
         <!-- Mobile Menu Drawer (Overlay style) -->
         <div v-if="isMenuOpen" 
-             class="fixed inset-0 top-[65px] z-50 bg-slate-900/50 backdrop-blur-sm lg:hidden transition-opacity duration-300"
+             class="fixed inset-x-0 bottom-0 top-[64px] z-[110] bg-slate-900/50 backdrop-blur-sm lg:hidden transition-opacity duration-300"
              @click="isMenuOpen = false">
         </div>
         
-        <div class="fixed top-[65px] right-0 bottom-0 w-[300px] bg-white z-[60] lg:hidden shadow-2xl transform transition-transform duration-300 ease-in-out"
+        <div class="fixed inset-x-0 bottom-0 top-[64px] z-[120] bg-white lg:hidden shadow-2xl transform transition-transform duration-300 ease-in-out sm:left-auto sm:w-[340px]"
              :class="isMenuOpen ? 'translate-x-0' : 'translate-x-full'">
             <div class="h-full flex flex-col overflow-y-auto">
                 <div class="p-6 space-y-2">

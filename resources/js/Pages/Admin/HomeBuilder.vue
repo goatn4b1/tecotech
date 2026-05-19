@@ -121,6 +121,11 @@ const cancelEdit = () => {
                                     <input v-model="editingSection.data.slides[0].title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 </div>
                                 <div class="mb-3">
+                                    <label class="block text-sm font-medium text-gray-700">Phần highlight trong tiêu đề</label>
+                                    <input v-model="editingSection.data.slides[0].highlight" type="text" placeholder="Nhập đúng cụm chữ trong tiêu đề để đổi màu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    <p class="mt-1 text-xs text-gray-500">Ví dụ tiêu đề có chữ TECOTECH, nhập TECOTECH để phần này hiển thị màu nhấn.</p>
+                                </div>
+                                <div class="mb-3">
                                     <label class="block text-sm font-medium text-gray-700">Mô tả nhỏ</label>
                                     <input v-model="editingSection.data.slides[0].desc" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 </div>

@@ -1,6 +1,7 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { 
     ChevronRight, 
     History, 
@@ -22,6 +23,28 @@ defineProps({
     },
 });
 
+const page = usePage();
+const settings = computed(() => page.props.globalSettings || {});
+const phoneDisplay = computed(() => settings.value.site_phone || '');
+const phoneHref = computed(() => `tel:${phoneDisplay.value.replace(/\s+/g, '')}`);
+
+const splitHeroTitle = (slide) => {
+    const title = slide?.title || '';
+    const highlight = slide?.highlight || '';
+
+    if (!highlight || !title.includes(highlight)) {
+        return { before: title, highlight: '', after: '' };
+    }
+
+    const start = title.indexOf(highlight);
+
+    return {
+        before: title.slice(0, start),
+        highlight,
+        after: title.slice(start + highlight.length),
+    };
+};
+
 const projects = [
     {
         title: 'Công trình xử lý nước thải ga cáp treo khu du lịch núi Bà Đen',
@@ -40,26 +63,30 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
     <MainLayout>
         <template v-for="section in sections" :key="section.id">
             <!-- Hero Section -->
-            <section v-if="section.type === 'hero'" class="relative min-h-[500px] md:h-[calc(100vh-80px)] max-h-[800px] overflow-hidden">
+            <section v-if="section.type === 'hero'" class="relative min-h-[560px] md:h-[calc(100vh-80px)] max-h-[800px] overflow-hidden">
                 <div class="absolute inset-0">
                     <img :src="section.data.slides[0].image" class="h-full w-full object-cover" alt="TECOTECH">
                     <div class="absolute inset-0 bg-slate-900/40"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/20 to-transparent"></div>
                 </div>
-                <div class="container relative mx-auto flex h-full items-center px-4">
-                    <div class="max-w-3xl space-y-6 animate-fade-in-up">
-                        <h1 class="text-4xl md:text-7xl font-bold text-white leading-[1.1]">
-                            {{ section.data.slides[0].title }}
+                <div class="container relative mx-auto flex min-h-[560px] items-center px-4 py-16 md:h-full md:min-h-0 md:py-0">
+                    <div class="max-w-3xl space-y-7 animate-fade-in-up md:space-y-6">
+                        <h1 class="text-3xl font-bold text-white leading-[1.22] sm:text-4xl md:text-7xl md:leading-[1.1]">
+                            <span>{{ splitHeroTitle(section.data.slides[0]).before }}</span>
+                            <span v-if="splitHeroTitle(section.data.slides[0]).highlight" class="text-primary">
+                                {{ splitHeroTitle(section.data.slides[0]).highlight }}
+                            </span>
+                            <span>{{ splitHeroTitle(section.data.slides[0]).after }}</span>
                         </h1>
-                        <p class="text-lg md:text-xl text-slate-200 leading-relaxed max-w-2xl font-normal opacity-90">
+                        <p class="text-base md:text-xl text-slate-200 leading-8 md:leading-relaxed max-w-2xl font-normal opacity-90">
                             {{ section.data.slides[0].desc }}
                         </p>
-                        <div class="pt-6 flex flex-wrap gap-4">
-                            <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-10 font-bold group shadow-xl shadow-primary/30">
+                        <div class="pt-4 flex flex-wrap gap-4 md:pt-6">
+                            <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-8 md:px-10 font-bold group shadow-xl shadow-primary/30">
                                 Liên hệ ngay
                                 <ArrowRight class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                            <Link href="/gioi-thieu" class="btn bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border-white/20 hover:border-white/40 btn-lg rounded-xl px-10">
+                            <Link href="/gioi-thieu" class="btn bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border-white/20 hover:border-white/40 btn-lg rounded-xl px-8 md:px-10">
                                 Tìm hiểu thêm
                             </Link>
                         </div>
@@ -185,6 +212,26 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                     </div>
                 </div>
             </section>
+
+            <!-- Partners Section -->
+            <section v-if="section.type === 'partners'" class="bg-white py-20">
+                <div class="container mx-auto px-4">
+                    <div class="mb-12 text-center">
+                        <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs py-1 px-3 bg-primary/10 rounded-full">
+                            Đối tác
+                        </div>
+                        <h2 class="mt-4 text-3xl md:text-4xl font-bold text-slate-900">
+                            {{ section.data.title || 'Đối tác - Khách hàng' }}
+                        </h2>
+                    </div>
+
+                    <div v-if="section.data.images?.length" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                        <div v-for="image in section.data.images" :key="image" class="flex h-24 items-center justify-center rounded-lg border border-slate-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                            <img :src="image" alt="Đối tác khách hàng TECOTECH" class="max-h-full max-w-full object-contain">
+                        </div>
+                    </div>
+                </div>
+            </section>
         </template>
 
         <!-- Featured Projects -->
@@ -274,8 +321,8 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                         <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-12 font-bold shadow-xl shadow-primary/30">
                             Yêu cầu báo giá
                         </Link>
-                        <a href="tel:0912345678" class="btn bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border-white/10 hover:border-white/20 btn-lg rounded-xl px-12 font-bold">
-                            Gọi ngay: 0912 345 678
+                        <a v-if="phoneDisplay" :href="phoneHref" class="btn bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border-white/10 hover:border-white/20 btn-lg rounded-xl px-12 font-bold">
+                            Gọi ngay: {{ phoneDisplay }}
                         </a>
                     </div>
                 </div>

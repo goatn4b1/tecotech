@@ -8,12 +8,17 @@
         @php
             $metaTitle = $seo_title ?? $page['props']['seoDefaults']['title'] ?? config('app.name', 'Laravel');
             $metaDescription = $seo_description ?? $page['props']['seoDefaults']['description'] ?? '';
+            $metaKeywords = $seo_keywords ?? $page['props']['seoDefaults']['keywords'] ?? '';
             $metaImage = $seo_image ?? $page['props']['seoDefaults']['image'] ?? '';
             $metaCanonical = $seo_canonical ?? $page['props']['seoDefaults']['canonical'] ?? request()->url();
+            $metaRobots = $seo_robots ?? $page['props']['seoDefaults']['robots'] ?? 'index, follow';
         @endphp
 
         <title inertia>{{ $metaTitle }}</title>
         <meta name="description" content="{{ $metaDescription }}">
+        <meta name="keywords" content="{{ $metaKeywords }}">
+        <meta name="robots" content="{{ $metaRobots }}">
+        <link rel="canonical" href="{{ $metaCanonical }}">
         
         <!-- Open Graph / Facebook / Zalo -->
         <meta property="og:type" content="website">

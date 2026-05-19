@@ -46,6 +46,8 @@ class AdminSeeder extends Seeder
             'floating_back_to_top' => '1',
             'dmca_image' => 'https://cokhimoitruong.com.vn/storage/setting/dmca_1727943209.webp',
             'footer_copyright' => '© Copyright 2008 - 2024 TECOTECH.',
+            'home_meta_keywords' => 'xử lý nước thải, xử lý khí thải, xử lý nước cấp, tổng thầu EPC môi trường, gia công cơ khí, cơ khí môi trường, TECOTECH',
+            'home_meta_robots' => 'index, follow',
             'site_google_map' => '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.2144866632426!2d105.82362037596851!3d20.98404098065494!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac5df05b5f2f%3A0xb3a5043a4e98f480!2zTMO0IEIsIEvEkFQgxJDhuqFpIEtpbSAtIMSQ4buLbmggQ8O0bmcsIMSQ4buLbmggQ8O0bmcsIEhvw6BuZyBNYWksIEjDoCBO4buZaSwgVmlldG5hbQ!5e0!3m2!1sen!2s!4v1715500000000!5m2!1sen!2s" width="100%" height="200" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
         ];
 
@@ -270,6 +272,7 @@ class AdminSeeder extends Seeder
                         [
                             'image' => 'https://cokhimoitruong.com.vn/storage/slider/wss-banner-wuse-wwtreatment_1727924183.webp',
                             'title' => 'CƠ KHÍ MÔI TRƯỜNG TECOTECH',
+                            'highlight' => 'TECOTECH',
                             'desc' => 'Chuyên gia công cơ khí phi tiêu chuẩn, gia công cơ khí theo yêu cầu.',
                         ],
                     ],
@@ -314,5 +317,14 @@ class AdminSeeder extends Seeder
                 ],
             ]);
         }
+
+        HomeSection::where('type', 'hero')->get()->each(function (HomeSection $section) {
+            $data = $section->data ?? [];
+
+            if (isset($data['slides'][0]) && empty($data['slides'][0]['highlight'])) {
+                $data['slides'][0]['highlight'] = 'TECOTECH';
+                $section->update(['data' => $data]);
+            }
+        });
     }
 }

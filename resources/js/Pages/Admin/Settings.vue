@@ -264,6 +264,11 @@ const submit = () => {
                                 <img v-if="previews.home_og_image" :src="previews.home_og_image" class="mt-3 h-32 w-auto rounded border object-cover" />
                                 <p class="mt-1 text-xs text-gray-500 italic">Dùng làm ảnh đại diện khi chia sẻ trang chủ lên Facebook/Zalo.</p>
                             </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Từ khóa SEO trang chủ</label>
+                                <textarea v-model="form.home_meta_keywords" rows="4" placeholder="xử lý nước thải, xử lý khí thải, gia công cơ khí, tổng thầu EPC môi trường..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                <p class="mt-1 text-xs text-gray-500 italic">Nhập các từ khóa chính, phân tách bằng dấu phẩy. Trường này sẽ được dùng cho meta keywords của trang chủ.</p>
+                            </div>
                         </div>
 
                         <SEOForm 
