@@ -8,8 +8,10 @@ import {
     Users, 
     Wrench, 
     ArrowRight,
-    Calendar,
-    Tag
+    Eye,
+    Rocket,
+    Target,
+    Award
 } from 'lucide-vue-next';
 
 defineProps({
@@ -57,6 +59,7 @@ const projects = [
 ];
 
 const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-VN');
+const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
 </script>
 
 <template>
@@ -213,6 +216,51 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                 </div>
             </section>
 
+            <!-- Mission Section -->
+            <section v-if="section.type === 'mission'" class="bg-white py-24">
+                <div class="container mx-auto px-4">
+                    <div class="mx-auto mb-14 max-w-3xl text-center">
+                        <div class="inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary">
+                            Định hướng phát triển
+                        </div>
+                        <h2 class="mt-4 text-3xl font-bold leading-tight text-slate-900 md:text-5xl">
+                            {{ section.data.title || 'Tầm nhìn - Sứ mệnh - Mục tiêu' }}
+                        </h2>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                        <article
+                            v-for="card in (section.data.cards || [])"
+                            :key="card.key || card.title"
+                            class="relative rounded-2xl border border-primary/20 bg-gradient-to-b from-white to-sky-50 p-8 pt-12 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                        >
+                            <div class="absolute left-1/2 top-0 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-white bg-primary text-white shadow-lg">
+                                <component :is="missionIconMap[card.key] || Award" class="h-7 w-7" />
+                            </div>
+                            <h3 class="mb-4 text-xl font-bold uppercase text-slate-900">{{ card.title }}</h3>
+                            <p class="text-left text-base leading-8 text-slate-700">{{ card.content }}</p>
+                        </article>
+                    </div>
+
+                    <div class="mt-8 rounded-[2rem] border border-primary/20 bg-gradient-to-b from-white to-sky-50 p-8 shadow-sm md:p-10">
+                        <div class="flex flex-col gap-6 md:flex-row md:items-start">
+                            <div class="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-lg">
+                                <Award class="h-10 w-10" />
+                            </div>
+                            <div>
+                                <h3 class="mb-5 text-2xl font-bold uppercase text-slate-900">{{ section.data.coreTitle || 'Giá trị cốt lõi' }}</h3>
+                                <ul class="space-y-3 text-base leading-8 text-slate-700">
+                                    <li v-for="item in (section.data.coreValues || [])" :key="item.title" class="flex gap-3">
+                                        <span class="mt-3 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-primary"></span>
+                                        <span><strong>{{ item.title }}:</strong> {{ item.content }}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Partners Section -->
             <section v-if="section.type === 'partners'" class="bg-white py-20">
                 <div class="container mx-auto px-4">
@@ -237,13 +285,13 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
         <!-- Featured Projects -->
         <section class="bg-white py-24">
             <div class="container mx-auto px-4">
-                <div class="flex items-end justify-between mb-12">
+                <div class="mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
                     <div class="space-y-2">
                         <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs">Danh mục</div>
                         <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Công trình tiêu biểu</h2>
                     </div>
-                    <Link href="/cong-trinh" class="btn btn-ghost hover:bg-slate-50 rounded-xl font-bold text-primary">
-                        Xem tất cả <ArrowRight class="ml-2 w-4 h-4" />
+                    <Link href="/cong-trinh" class="inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-primary-dark">
+                        Xem tất cả <ArrowRight class="w-4 h-4" />
                     </Link>
                 </div>
                 
@@ -251,10 +299,10 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                     <div v-for="project in projects" :key="project.title" class="group relative rounded-3xl overflow-hidden aspect-[16/9] shadow-lg">
                         <img :src="project.image" :alt="project.title" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                        <div class="absolute inset-0 p-8 flex flex-col justify-end translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="absolute inset-0 p-8 flex flex-col justify-end transition-transform duration-500">
                             <h3 class="text-xl md:text-2xl font-bold text-white mb-4 line-clamp-2 min-h-[3.5rem] flex items-end">{{ project.title }}</h3>
-                            <Link href="/cong-trinh" class="inline-flex items-center gap-2 text-white/80 font-bold hover:text-white transition-colors group/btn">
-                                Xem chi tiết <ArrowRight class="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
+                            <Link href="/cong-trinh" class="inline-flex w-fit items-center gap-2 rounded-lg bg-white/95 px-4 py-2 text-sm font-bold text-slate-900 shadow transition hover:bg-primary hover:text-white group/btn">
+                                Xem chi tiết <ArrowRight class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                             </Link>
                         </div>
                     </div>

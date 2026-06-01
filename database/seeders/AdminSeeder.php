@@ -7,6 +7,8 @@ use App\Models\HomeSection;
 use App\Models\Menu;
 use App\Models\Page;
 use App\Models\Post;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -237,6 +239,30 @@ class AdminSeeder extends Seeder
             );
         }
 
+        $productCategory = ProductCategory::updateOrCreate(
+            ['slug' => 'thiet-bi-moi-truong'],
+            [
+                'name' => 'Thiết bị môi trường',
+                'description' => 'Các thiết bị xử lý nước thải, khí thải và cơ khí môi trường do TECOTECH cung cấp.',
+                'image' => 'https://cokhimoitruong.com.vn/storage/category-product/tm1_1728889805.webp',
+                'order' => 1,
+                'is_active' => true,
+            ]
+        );
+
+        Product::updateOrCreate(
+            ['slug' => 'cum-thiet-bi-xu-ly-nuoc-thai'],
+            [
+                'product_category_id' => $productCategory->id,
+                'name' => 'Cụm thiết bị xử lý nước thải',
+                'image' => 'https://cokhimoitruong.com.vn/storage/category-product/tm1_1728889805.webp',
+                'excerpt' => 'Cụm thiết bị xử lý nước thải thiết kế theo công suất và đặc thù từng công trình.',
+                'content' => '<p>Thiết bị được thiết kế, gia công và lắp đặt theo yêu cầu kỹ thuật của từng dự án.</p>',
+                'order' => 1,
+                'is_active' => true,
+            ]
+        );
+
         Menu::whereIn('link', [
             '/',
             '/gioi-thieu',
@@ -317,6 +343,56 @@ class AdminSeeder extends Seeder
                 ],
             ]);
         }
+
+        if (! HomeSection::where('type', 'mission')->exists()) {
+            HomeSection::create([
+                'type' => 'mission',
+                'name' => 'Tầm nhìn - Sứ mệnh - Giá trị cốt lõi',
+                'order' => 4,
+                'is_active' => true,
+                'data' => [
+                    'title' => 'Tầm nhìn - Sứ mệnh - Mục tiêu',
+                    'cards' => [
+                        [
+                            'key' => 'vision',
+                            'title' => 'Tầm nhìn',
+                            'content' => 'TECOTECH sẽ trở thành đơn vị hàng đầu trong giải pháp và công nghệ xử lý môi trường, tư vấn môi trường chuyên nghiệp.',
+                        ],
+                        [
+                            'key' => 'mission',
+                            'title' => 'Sứ mệnh',
+                            'content' => 'Mang đến các giải pháp công nghệ tiên tiến, thân thiện môi trường nhằm góp phần cải thiện chất lượng cuộc sống cộng đồng và gìn giữ hệ sinh thái xanh cho thế hệ tương lai.',
+                        ],
+                        [
+                            'key' => 'goal',
+                            'title' => 'Mục tiêu',
+                            'content' => 'Đến năm 2035 - 2040: Dẫn đầu thị trường trong nước, mở rộng sang thị trường quốc tế. Ứng dụng 100% công nghệ thân thiện với môi trường. Xây dựng thương hiệu bền vững, nâng cao năng lực cạnh tranh khu vực.',
+                        ],
+                    ],
+                    'coreTitle' => 'Giá trị cốt lõi',
+                    'coreValues' => [
+                        [
+                            'title' => 'Uy tín',
+                            'content' => 'Giữ lời hứa với khách hàng, đối tác và cộng đồng. Minh bạch trong mọi hoạt động, đặt chất lượng và sự tin cậy lên hàng đầu.',
+                        ],
+                        [
+                            'title' => 'Sáng tạo - Đổi mới',
+                            'content' => 'Luôn tìm tòi giải pháp công nghệ mới, tối ưu hiệu quả xử lý. Khuyến khích nhân viên đề xuất ý tưởng, cải tiến quy trình làm việc.',
+                        ],
+                        [
+                            'title' => 'Trách nhiệm',
+                            'content' => 'Phát triển gắn liền với bảo vệ môi trường và lợi ích xã hội. Chăm lo đời sống, an toàn của nhân viên và cộng đồng xung quanh.',
+                        ],
+                        [
+                            'title' => 'Hợp tác - Đồng hành',
+                            'content' => 'Xây dựng mối quan hệ bền chặt với khách hàng, đối tác. Coi thành công của khách hàng là thành công của chính mình.',
+                        ],
+                    ],
+                ],
+            ]);
+        }
+
+        HomeSection::where('type', 'partners')->where('order', '<=', 4)->update(['order' => 5]);
 
         HomeSection::where('type', 'hero')->get()->each(function (HomeSection $section) {
             $data = $section->data ?? [];

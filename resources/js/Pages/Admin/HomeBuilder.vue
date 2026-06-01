@@ -170,6 +170,36 @@ const cancelEdit = () => {
                                 </div>
                             </div>
 
+                            <div v-if="editingSection.type === 'mission'">
+                                <div class="mb-3">
+                                    <label class="block text-sm font-medium text-gray-700">Tiêu đề section</label>
+                                    <input v-model="editingSection.data.title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                </div>
+
+                                <p class="mt-4 border-b pb-1 text-sm font-bold">Tầm nhìn - Sứ mệnh - Mục tiêu</p>
+                                <div v-for="(card, idx) in editingSection.data.cards" :key="idx" class="mb-3 rounded border bg-gray-50 p-3">
+                                    <label class="mb-1 block text-xs font-medium text-gray-500">Tiêu đề</label>
+                                    <input v-model="card.title" class="mb-2 w-full rounded border-gray-300 text-sm">
+                                    <label class="mb-1 block text-xs font-medium text-gray-500">Nội dung</label>
+                                    <textarea v-model="card.content" rows="4" class="w-full rounded border-gray-300 text-sm"></textarea>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="block text-sm font-medium text-gray-700">Tiêu đề giá trị cốt lõi</label>
+                                    <input v-model="editingSection.data.coreTitle" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                </div>
+
+                                <p class="mt-4 border-b pb-1 text-sm font-bold">Giá trị cốt lõi</p>
+                                <div v-for="(item, idx) in editingSection.data.coreValues" :key="idx" class="mb-3 rounded border bg-gray-50 p-3">
+                                    <div class="mb-2 flex gap-2">
+                                        <input v-model="item.title" placeholder="Tên giá trị" class="flex-1 rounded border-gray-300 text-sm">
+                                        <button type="button" @click="editingSection.data.coreValues.splice(idx, 1)" class="text-red-500"><i class="fas fa-times"></i></button>
+                                    </div>
+                                    <textarea v-model="item.content" rows="3" placeholder="Nội dung" class="w-full rounded border-gray-300 text-sm"></textarea>
+                                </div>
+                                <button type="button" @click="editingSection.data.coreValues.push({ title: '', content: '' })" class="text-sm text-blue-500"><i class="fas fa-plus"></i> Thêm giá trị</button>
+                            </div>
+
                             <div v-if="editingSection.type === 'partners'">
                                 <div class="mb-3">
                                     <label class="block text-sm font-medium text-gray-700">Tiêu đề</label>

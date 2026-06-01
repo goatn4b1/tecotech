@@ -96,6 +96,8 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class)->except(['show']);
     Route::resource('pages', \App\Http\Controllers\Admin\PageController::class)->except(['show']);
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['show']);
+    Route::resource('product-categories', \App\Http\Controllers\Admin\ProductCategoryController::class)->except(['show']);
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['show']);
 });
 
 Route::middleware('auth')->prefix('admin')->group(function () {

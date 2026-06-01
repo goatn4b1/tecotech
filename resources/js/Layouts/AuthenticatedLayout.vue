@@ -64,6 +64,18 @@ const showingNavigationDropdown = ref(false);
                                     Danh mục
                                 </NavLink>
                                 <NavLink
+                                    :href="route('admin.product-categories.index')"
+                                    :active="route().current('admin.product-categories.*')"
+                                >
+                                    DM sản phẩm
+                                </NavLink>
+                                <NavLink
+                                    :href="route('admin.products.index')"
+                                    :active="route().current('admin.products.*')"
+                                >
+                                    Sản phẩm
+                                </NavLink>
+                                <NavLink
                                     :href="route('admin.settings.index')"
                                     :active="route().current('admin.settings.index')"
                                 >
@@ -181,6 +193,30 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('dashboard')"
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.home-builder.index')" :active="route().current('admin.home-builder.*')">
+                            Trang chủ
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.pages.index')" :active="route().current('admin.pages.*')">
+                            Trang nội dung
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.posts.index')" :active="route().current('admin.posts.*')">
+                            Bài viết
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.categories.index')" :active="route().current('admin.categories.*')">
+                            Danh mục bài viết
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.product-categories.index')" :active="route().current('admin.product-categories.*')">
+                            Danh mục sản phẩm
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.products.index')" :active="route().current('admin.products.*')">
+                            Sản phẩm
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.settings.index')" :active="route().current('admin.settings.index')">
+                            Cấu hình
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('admin.menus.index')" :active="route().current('admin.menus.index')">
+                            Menu
                         </ResponsiveNavLink>
                     </div>
 
