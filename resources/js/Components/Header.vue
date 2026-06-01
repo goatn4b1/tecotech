@@ -12,48 +12,23 @@ import {
     X,
     Youtube,
 } from 'lucide-vue-next';
-import { computed, onBeforeUnmount, ref, watch } from 'vue';
+import { computed } from 'vue';
 
 const page = usePage();
 const settings = computed(() => page.props.globalSettings || {});
 const menus = computed(() => page.props.globalMenus || []);
-
-const isMobileOpen = ref(false);
-const openSubmenus = ref({});
 
 const phoneHref = computed(() => `tel:${(settings.value.site_phone || '').replace(/\s+/g, '')}`);
 const zaloLink = computed(() => {
     const value = (settings.value.site_zalo || '').replace(/\s+/g, '');
     return value.startsWith('http') ? value : `https://zalo.me/${value}`;
 });
-
-const closeMobileMenu = () => {
-    isMobileOpen.value = false;
-    openSubmenus.value = {};
-};
-
-const toggleMobileMenu = () => {
-    isMobileOpen.value = !isMobileOpen.value;
-};
-
-const toggleSubmenu = (id) => {
-    openSubmenus.value = {
-        ...openSubmenus.value,
-        [id]: !openSubmenus.value[id],
-    };
-};
-
-watch(isMobileOpen, (isOpen) => {
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-});
-
-onBeforeUnmount(() => {
-    document.body.style.overflow = '';
-});
 </script>
 
 <template>
     <div class="relative z-[1000]">
+        <input id="mobile-menu-toggle" type="checkbox" class="peer sr-only" aria-hidden="true">
+
         <div class="hidden bg-slate-900 py-2.5 text-xs text-slate-300 md:block">
             <div class="container mx-auto flex items-center justify-between px-4">
                 <div class="flex items-center gap-6">
@@ -87,7 +62,7 @@ onBeforeUnmount(() => {
 
         <header class="sticky top-0 border-b border-slate-100 bg-white shadow-sm">
             <div class="container mx-auto flex h-16 items-center justify-between px-4 lg:h-20">
-                <Link href="/" class="flex min-w-0 items-center" @click="closeMobileMenu">
+                <Link href="/" class="flex min-w-0 items-center">
                     <img
                         :src="settings.site_logo || '/images/logo.png'"
                         :alt="settings.site_name || 'TECOTECH'"
@@ -131,42 +106,34 @@ onBeforeUnmount(() => {
                     </Link>
                 </nav>
 
-                <button
-                    type="button"
-                    class="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-slate-200 text-slate-800 lg:hidden"
-                    :aria-expanded="isMobileOpen"
-                    aria-controls="mobile-main-menu"
+                <label
+                    for="mobile-menu-toggle"
+                    class="inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-800 lg:hidden"
                     aria-label="Mở menu"
-                    @click="toggleMobileMenu"
                 >
-                    <MenuIcon v-if="!isMobileOpen" class="h-6 w-6" />
-                    <X v-else class="h-6 w-6" />
-                </button>
+                    <MenuIcon class="h-7 w-7 peer-checked:hidden" />
+                </label>
             </div>
         </header>
-    </div>
 
-    <div
-        v-if="isMobileOpen"
-        id="mobile-main-menu"
-        class="fixed inset-0 z-[3000] lg:hidden"
-        role="dialog"
-        aria-modal="true"
-    >
-        <button type="button" class="absolute inset-0 h-full w-full bg-slate-950/60" aria-label="Đóng menu" @click="closeMobileMenu"></button>
+        <label
+            for="mobile-menu-toggle"
+            class="fixed inset-0 z-[3000] hidden cursor-pointer bg-slate-950/60 peer-checked:block lg:hidden"
+            aria-label="Đóng menu"
+        ></label>
 
-        <aside class="absolute right-0 top-0 flex h-full w-[86vw] max-w-[360px] flex-col bg-white shadow-2xl">
+        <aside class="fixed bottom-0 right-0 top-0 z-[3010] flex w-[88vw] max-w-[380px] translate-x-full flex-col bg-white shadow-2xl transition-transform duration-300 peer-checked:translate-x-0 lg:hidden">
             <div class="flex h-16 items-center justify-between border-b border-slate-100 px-5">
-                <Link href="/" @click="closeMobileMenu">
+                <Link href="/">
                     <img
                         :src="settings.site_logo || '/images/logo.png'"
                         :alt="settings.site_name || 'TECOTECH'"
                         class="h-10 w-auto"
                     >
                 </Link>
-                <button type="button" class="rounded-lg p-2 text-slate-700 hover:bg-slate-100" aria-label="Đóng menu" @click="closeMobileMenu">
-                    <X class="h-6 w-6" />
-                </button>
+                <label for="mobile-menu-toggle" class="cursor-pointer rounded-lg p-2 text-slate-700 hover:bg-slate-100" aria-label="Đóng menu">
+                    <X class="h-7 w-7" />
+                </label>
             </div>
 
             <nav class="flex-1 overflow-y-auto px-5 py-4">
@@ -175,33 +142,27 @@ onBeforeUnmount(() => {
                         v-if="!menu.children || menu.children.length === 0"
                         :href="menu.link"
                         class="block py-4 text-sm font-bold uppercase tracking-wide text-slate-800"
-                        @click="closeMobileMenu"
                     >
                         {{ menu.name }}
                     </Link>
 
-                    <div v-else class="py-4">
-                        <button
-                            type="button"
-                            class="flex w-full items-center justify-between text-left text-sm font-bold uppercase tracking-wide text-slate-800"
-                            @click="toggleSubmenu(menu.id)"
-                        >
+                    <details v-else class="group py-4">
+                        <summary class="flex cursor-pointer list-none items-center justify-between text-sm font-bold uppercase tracking-wide text-slate-800">
                             {{ menu.name }}
-                            <ChevronDown class="h-4 w-4 transition" :class="{ 'rotate-180': openSubmenus[menu.id] }" />
-                        </button>
+                            <ChevronDown class="h-4 w-4 transition group-open:rotate-180" />
+                        </summary>
 
-                        <div v-if="openSubmenus[menu.id]" class="mt-3 border-l-2 border-primary/20 pl-4">
+                        <div class="mt-3 border-l-2 border-primary/20 pl-4">
                             <Link
                                 v-for="child in menu.children"
                                 :key="child.id"
                                 :href="child.link"
                                 class="block rounded-r-lg px-3 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-primary"
-                                @click="closeMobileMenu"
                             >
                                 {{ child.name }}
                             </Link>
                         </div>
-                    </div>
+                    </details>
                 </div>
 
                 <div v-if="menus.length === 0" class="py-8 text-center text-sm text-slate-500">
@@ -210,7 +171,7 @@ onBeforeUnmount(() => {
             </nav>
 
             <div class="border-t border-slate-100 bg-slate-50 p-5">
-                <Link href="/tu-van" class="btn btn-secondary w-full rounded-xl font-bold" @click="closeMobileMenu">
+                <Link href="/tu-van" class="btn btn-secondary w-full rounded-xl font-bold">
                     <Headphones class="h-5 w-5" />
                     Tư vấn miễn phí
                 </Link>
