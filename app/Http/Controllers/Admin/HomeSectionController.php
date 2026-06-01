@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\HomeSection;
+use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,7 +14,8 @@ class HomeSectionController extends Controller
     {
         $sections = HomeSection::orderBy('order')->get();
         return Inertia::render('Admin/HomeBuilder', [
-            'sections' => $sections
+            'sections' => $sections,
+            'productCategories' => ProductCategory::where('is_active', true)->orderBy('order')->get(),
         ]);
     }
 

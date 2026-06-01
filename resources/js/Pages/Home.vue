@@ -23,6 +23,10 @@ defineProps({
         type: Array,
         default: () => [],
     },
+    featuredProducts: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const page = usePage();
@@ -46,17 +50,6 @@ const splitHeroTitle = (slide) => {
         after: title.slice(start + highlight.length),
     };
 };
-
-const projects = [
-    {
-        title: 'Công trình xử lý nước thải ga cáp treo khu du lịch núi Bà Đen',
-        image: 'https://cokhimoitruong.com.vn/storage/category-product/tm1_1728889805.webp',
-    },
-    {
-        title: 'Công trình xử lý nước thải chợ trung tâm Lý Sơn',
-        image: 'https://cokhimoitruong.com.vn/storage/category-product/tm1_1728889805.webp',
-    },
-];
 
 const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-VN');
 const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
@@ -261,6 +254,50 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                 </div>
             </section>
 
+            <!-- Featured Projects / Products Section -->
+            <section v-if="section.type === 'featured_projects'" class="bg-white py-24">
+                <div class="container mx-auto px-4">
+                    <div class="mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+                        <div class="space-y-2">
+                            <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs">
+                                {{ section.data.eyebrow || 'Danh mục' }}
+                            </div>
+                            <h2 class="text-3xl md:text-4xl font-bold text-slate-900">{{ section.data.title || 'Công trình tiêu biểu' }}</h2>
+                        </div>
+                        <Link href="/san-pham" class="inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-primary-dark">
+                            Xem tất cả <ArrowRight class="w-4 h-4" />
+                        </Link>
+                    </div>
+
+                    <div v-if="featuredProducts.length" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                        <article v-for="product in featuredProducts" :key="product.id" class="group overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-slate-100">
+                            <div class="relative aspect-[16/10] overflow-hidden">
+                                <img
+                                    :src="product.image || 'https://cokhimoitruong.com.vn/storage/category-product/tm1_1728889805.webp'"
+                                    :alt="product.name"
+                                    class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
+                                >
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/10 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 right-4">
+                                    <div class="mb-2 text-xs font-bold uppercase tracking-widest text-primary">{{ product.category?.name || 'Sản phẩm' }}</div>
+                                    <h3 class="line-clamp-2 text-xl font-bold text-white">{{ product.name }}</h3>
+                                </div>
+                            </div>
+                            <div class="space-y-4 p-6">
+                                <p class="line-clamp-2 text-sm leading-6 text-slate-600">{{ product.excerpt }}</p>
+                                <Link href="/san-pham" class="inline-flex w-fit items-center gap-2 rounded-lg bg-slate-900 px-4 py-2 text-sm font-bold text-white transition hover:bg-primary group/btn">
+                                    Xem chi tiết <ArrowRight class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                                </Link>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div v-else class="rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 p-14 text-center text-slate-500">
+                        Chưa có sản phẩm/công trình nào trong danh mục đã chọn.
+                    </div>
+                </div>
+            </section>
+
             <!-- Partners Section -->
             <section v-if="section.type === 'partners'" class="bg-white py-20">
                 <div class="container mx-auto px-4">
@@ -281,34 +318,6 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                 </div>
             </section>
         </template>
-
-        <!-- Featured Projects -->
-        <section class="bg-white py-24">
-            <div class="container mx-auto px-4">
-                <div class="mb-12 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                    <div class="space-y-2">
-                        <div class="inline-block text-primary font-bold uppercase tracking-widest text-xs">Danh mục</div>
-                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900">Công trình tiêu biểu</h2>
-                    </div>
-                    <Link href="/cong-trinh" class="inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-bold text-white shadow-lg shadow-primary/20 transition hover:bg-primary-dark">
-                        Xem tất cả <ArrowRight class="w-4 h-4" />
-                    </Link>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div v-for="project in projects" :key="project.title" class="group relative rounded-3xl overflow-hidden aspect-[16/9] shadow-lg">
-                        <img :src="project.image" :alt="project.title" class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/20 to-transparent"></div>
-                        <div class="absolute inset-0 p-8 flex flex-col justify-end transition-transform duration-500">
-                            <h3 class="text-xl md:text-2xl font-bold text-white mb-4 line-clamp-2 min-h-[3.5rem] flex items-end">{{ project.title }}</h3>
-                            <Link href="/cong-trinh" class="inline-flex w-fit items-center gap-2 rounded-lg bg-white/95 px-4 py-2 text-sm font-bold text-slate-900 shadow transition hover:bg-primary hover:text-white group/btn">
-                                Xem chi tiết <ArrowRight class="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                            </Link>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- Latest News -->
         <section class="bg-slate-50 py-24">

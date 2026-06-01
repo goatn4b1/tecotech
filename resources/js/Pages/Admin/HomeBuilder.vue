@@ -6,6 +6,10 @@ import draggable from 'vuedraggable';
 
 const props = defineProps({
     sections: Array,
+    productCategories: {
+        type: Array,
+        default: () => [],
+    },
 });
 
 const sectionList = ref(props.sections);
@@ -198,6 +202,29 @@ const cancelEdit = () => {
                                     <textarea v-model="item.content" rows="3" placeholder="Nội dung" class="w-full rounded border-gray-300 text-sm"></textarea>
                                 </div>
                                 <button type="button" @click="editingSection.data.coreValues.push({ title: '', content: '' })" class="text-sm text-blue-500"><i class="fas fa-plus"></i> Thêm giá trị</button>
+                            </div>
+
+                            <div v-if="editingSection.type === 'featured_projects'">
+                                <div class="mb-3">
+                                    <label class="block text-sm font-medium text-gray-700">Tiêu đề</label>
+                                    <input v-model="editingSection.data.title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-sm font-medium text-gray-700">Nhãn nhỏ</label>
+                                    <input v-model="editingSection.data.eyebrow" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-sm font-medium text-gray-700">Danh mục sản phẩm hiển thị</label>
+                                    <select v-model="editingSection.data.product_category_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                        <option :value="null">Tất cả danh mục</option>
+                                        <option v-for="category in productCategories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                                    </select>
+                                    <p class="mt-1 text-xs text-gray-500">Trang chủ sẽ lấy tối đa 6 sản phẩm đang hiển thị trong danh mục này.</p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="block text-sm font-medium text-gray-700">Số lượng hiển thị</label>
+                                    <input v-model.number="editingSection.data.limit" type="number" min="1" max="12" class="mt-1 block w-40 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                </div>
                             </div>
 
                             <div v-if="editingSection.type === 'partners'">

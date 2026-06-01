@@ -344,11 +344,26 @@ class AdminSeeder extends Seeder
             ]);
         }
 
+        if (! HomeSection::where('type', 'featured_projects')->exists()) {
+            HomeSection::create([
+                'type' => 'featured_projects',
+                'name' => 'Công trình tiêu biểu',
+                'order' => 4,
+                'is_active' => true,
+                'data' => [
+                    'eyebrow' => 'Danh mục',
+                    'title' => 'Công trình tiêu biểu',
+                    'product_category_id' => $productCategory->id,
+                    'limit' => 2,
+                ],
+            ]);
+        }
+
         if (! HomeSection::where('type', 'mission')->exists()) {
             HomeSection::create([
                 'type' => 'mission',
                 'name' => 'Tầm nhìn - Sứ mệnh - Giá trị cốt lõi',
-                'order' => 4,
+                'order' => 5,
                 'is_active' => true,
                 'data' => [
                     'title' => 'Tầm nhìn - Sứ mệnh - Mục tiêu',
@@ -392,7 +407,7 @@ class AdminSeeder extends Seeder
             ]);
         }
 
-        HomeSection::where('type', 'partners')->where('order', '<=', 4)->update(['order' => 5]);
+        HomeSection::where('type', 'partners')->where('order', '<=', 5)->update(['order' => 6]);
 
         HomeSection::where('type', 'hero')->get()->each(function (HomeSection $section) {
             $data = $section->data ?? [];

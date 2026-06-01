@@ -12,10 +12,26 @@ Route::get('/', function () {
     $featuredPosts = Schema::hasTable('posts')
         ? \App\Models\Post::with('categoryRelation')->where('is_active', true)->latest()->limit(6)->get()
         : collect();
+    $featuredProducts = collect();
+
+    if (Schema::hasTable('products') && Schema::hasTable('home_sections')) {
+        $featuredSection = $sections->firstWhere('type', 'featured_projects');
+        $categoryId = $featuredSection['data']['product_category_id'] ?? null;
+        $limit = (int) ($featuredSection['data']['limit'] ?? 6);
+
+        $featuredProducts = \App\Models\Product::with('category')
+            ->where('is_active', true)
+            ->when($categoryId, fn ($query) => $query->where('product_category_id', $categoryId))
+            ->orderBy('order')
+            ->latest()
+            ->limit(max(1, min($limit, 12)))
+            ->get();
+    }
 
     return Inertia::render('Home', [
         'sections' => $sections,
         'featuredPosts' => $featuredPosts,
+        'featuredProducts' => $featuredProducts,
     ]);
 });
 
@@ -44,6 +60,17 @@ Route::get('/gia-cong-co-khi', fn () => $renderPageOr('gia-cong-co-khi', 'Servic
 ]));
 
 Route::get('/cong-trinh', fn () => $renderPageOr('cong-trinh', 'Projects'));
+
+Route::get('/san-pham', function () {
+    return Inertia::render('Products', [
+        'products' => Schema::hasTable('products')
+            ? \App\Models\Product::with('category')->where('is_active', true)->orderBy('order')->latest()->get()
+            : collect(),
+        'categories' => Schema::hasTable('product_categories')
+            ? \App\Models\ProductCategory::where('is_active', true)->orderBy('order')->get()
+            : collect(),
+    ]);
+})->name('products.index');
 
 Route::get('/tin-tuc', function () {
     $posts = \App\Models\Post::with('categoryRelation')->where('is_active', true)->orderBy('created_at', 'desc')->get();
