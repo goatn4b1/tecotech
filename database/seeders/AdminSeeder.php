@@ -333,7 +333,7 @@ class AdminSeeder extends Seeder
             HomeSection::create([
                 'type' => 'partners',
                 'name' => 'Đối tác - Khách hàng',
-                'order' => 4,
+                'order' => 6,
                 'data' => [
                     'title' => 'Đối tác - Khách hàng',
                     'images' => [
@@ -407,7 +407,18 @@ class AdminSeeder extends Seeder
             ]);
         }
 
-        HomeSection::where('type', 'partners')->where('order', '<=', 5)->update(['order' => 6]);
+        $homeSectionOrder = [
+            'hero' => 1,
+            'about' => 2,
+            'services' => 3,
+            'featured_projects' => 4,
+            'mission' => 5,
+            'partners' => 6,
+        ];
+
+        foreach ($homeSectionOrder as $type => $order) {
+            HomeSection::where('type', $type)->update(['order' => $order, 'is_active' => true]);
+        }
 
         HomeSection::where('type', 'hero')->get()->each(function (HomeSection $section) {
             $data = $section->data ?? [];
