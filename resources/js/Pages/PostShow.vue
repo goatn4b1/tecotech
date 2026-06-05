@@ -113,7 +113,7 @@ const contentWithToc = computed(() => {
                         </div>
                     </div>
 
-                    <div class="prose prose-lg max-w-none prose-slate prose-headings:text-slate-900 prose-headings:font-bold prose-a:text-primary prose-img:rounded-3xl prose-strong:text-slate-900" v-html="contentWithToc.html"></div>
+                    <div class="post-content" v-html="contentWithToc.html"></div>
                 </article>
 
                 <aside class="lg:col-span-1">
