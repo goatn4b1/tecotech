@@ -2,14 +2,66 @@
 import InnerHero from '@/Components/InnerHero.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Link } from '@inertiajs/vue3';
-import { Calendar, Tag, ChevronRight } from 'lucide-vue-next';
+import { Calendar, Tag, ChevronRight, ListTree } from 'lucide-vue-next';
+import { computed } from 'vue';
 
-defineProps({
+const props = defineProps({
     post: Object,
     relatedPosts: Array,
 });
 
 const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-VN');
+
+const slugify = (value) => value
+    .toString()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+
+const contentWithToc = computed(() => {
+    const content = props.post?.content || '';
+
+    if (typeof window === 'undefined' || !content) {
+        return { html: content, items: [] };
+    }
+
+    const documentFragment = new DOMParser().parseFromString(`<div>${content}</div>`, 'text/html');
+    const wrapper = documentFragment.body.firstElementChild;
+    const headings = Array.from(wrapper.querySelectorAll('h2, h3, h4'));
+    const usedIds = new Map();
+
+    const items = headings
+        .map((heading, index) => {
+            const text = heading.textContent?.trim() || '';
+            if (!text) return null;
+
+            const baseId = slugify(text) || `noi-dung-${index + 1}`;
+            const count = usedIds.get(baseId) || 0;
+            usedIds.set(baseId, count + 1);
+
+            const id = count > 0 ? `${baseId}-${count + 1}` : baseId;
+            heading.setAttribute('id', id);
+            heading.classList.add('scroll-mt-28');
+
+            return {
+                id,
+                text,
+                level: Number(heading.tagName.replace('H', '')),
+            };
+        })
+        .filter(Boolean);
+
+    return {
+        html: wrapper.innerHTML,
+        items,
+    };
+});
 </script>
 
 <template>
@@ -41,11 +93,49 @@ const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-V
                         </span>
                     </div>
                     
-                    <div class="prose prose-lg max-w-none prose-slate prose-headings:text-slate-900 prose-headings:font-bold prose-a:text-primary prose-img:rounded-3xl prose-strong:text-slate-900" v-html="post.content"></div>
+                    <div class="lg:hidden">
+                        <div v-if="contentWithToc.items.length" class="rounded-2xl border border-slate-100 bg-slate-50 p-5">
+                            <div class="mb-4 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-900">
+                                <ListTree class="h-4 w-4 text-primary" />
+                                Mục lục bài viết
+                            </div>
+                            <nav class="space-y-2">
+                                <a
+                                    v-for="item in contentWithToc.items"
+                                    :key="item.id"
+                                    :href="`#${item.id}`"
+                                    class="block rounded-lg px-3 py-2 text-sm font-semibold leading-5 text-slate-600 hover:bg-white hover:text-primary"
+                                    :class="{ 'pl-7': item.level === 3, 'pl-10 text-xs': item.level >= 4 }"
+                                >
+                                    {{ item.text }}
+                                </a>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="prose prose-lg max-w-none prose-slate prose-headings:text-slate-900 prose-headings:font-bold prose-a:text-primary prose-img:rounded-3xl prose-strong:text-slate-900" v-html="contentWithToc.html"></div>
                 </article>
 
                 <aside class="lg:col-span-1">
                     <div class="sticky top-28 space-y-10">
+                        <div v-if="contentWithToc.items.length" class="hidden rounded-3xl border border-slate-100 bg-white p-8 shadow-sm lg:block">
+                            <div class="mb-6 flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-900">
+                                <ListTree class="h-4 w-4 text-primary" />
+                                Mục lục bài viết
+                            </div>
+                            <nav class="space-y-2">
+                                <a
+                                    v-for="item in contentWithToc.items"
+                                    :key="item.id"
+                                    :href="`#${item.id}`"
+                                    class="block rounded-lg px-3 py-2 text-sm font-semibold leading-5 text-slate-600 transition hover:bg-slate-50 hover:text-primary"
+                                    :class="{ 'pl-7': item.level === 3, 'pl-10 text-xs': item.level >= 4 }"
+                                >
+                                    {{ item.text }}
+                                </a>
+                            </nav>
+                        </div>
+
                         <div class="rounded-3xl border border-slate-100 bg-slate-50 p-8">
                             <h2 class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6">Bài viết liên quan</h2>
                             <div class="space-y-8">
