@@ -8,9 +8,18 @@ import { computed } from 'vue';
 const props = defineProps({
     post: Object,
     relatedPosts: Array,
+    articleSchema: Object,
 });
 
 const formatDate = (dateString) => new Date(dateString).toLocaleDateString('vi-VN');
+const stripHtml = (value = '') => value.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+const limitText = (value = '', limit = 160) => value.length > limit ? value.slice(0, limit).trim() : value;
+
+const seoTitle = computed(() => props.post.meta_title || `${props.post.title} - TECOTECH`);
+const seoDescription = computed(() => props.post.meta_description || limitText(props.post.excerpt || stripHtml(props.post.content || '')));
+const seoImage = computed(() => props.post.og_image || props.post.image);
+const seoCanonical = computed(() => props.post.canonical_url || (typeof window !== 'undefined' ? window.location.href : ''));
+const seoRobots = computed(() => props.post.meta_robots || 'index, follow');
 
 const slugify = (value) => value
     .toString()
@@ -66,12 +75,17 @@ const contentWithToc = computed(() => {
 
 <template>
     <MainLayout 
-        :title="post.meta_title || (post.title + ' - TECOTECH')"
-        :description="post.meta_description"
+        :title="seoTitle"
+        :description="seoDescription"
         :keywords="post.meta_keywords"
-        :image="post.og_image || post.image"
-        :canonical="post.canonical_url"
-        :robots="post.meta_robots"
+        :image="seoImage"
+        :canonical="seoCanonical"
+        :robots="seoRobots"
+        type="article"
+        :published-time="post.created_at"
+        :modified-time="post.updated_at"
+        :section="post.categoryRelation?.name || post.category"
+        :schema="articleSchema"
     >
         <InnerHero
             :title="post.title"

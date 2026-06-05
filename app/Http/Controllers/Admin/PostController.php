@@ -38,6 +38,7 @@ class PostController extends Controller
         }
 
         unset($data['featured_image']);
+        $data = $this->withSeoFallbacks($data);
         Post::create($data);
 
         return redirect()->route('admin.posts.index')->with('success', 'Da them bai viet.');
@@ -67,6 +68,7 @@ class PostController extends Controller
         }
 
         unset($data['featured_image']);
+        $data = $this->withSeoFallbacks($data, $post);
         $post->update($data);
 
         return redirect()->route('admin.posts.index')->with('success', 'Da cap nhat bai viet.');
@@ -124,5 +126,38 @@ class PostController extends Controller
         }
 
         return Category::find($categoryId)?->name ?: $fallback;
+    }
+
+    private function withSeoFallbacks(array $data, ?Post $post = null): array
+    {
+        $slug = $data['slug'] ?? $post?->slug ?? Str::slug($data['title'] ?? 'bai-viet');
+        $image = $data['image'] ?? $post?->image ?? null;
+        $plainContent = trim(preg_replace('/\s+/', ' ', strip_tags($data['content'] ?? $post?->content ?? '')));
+        $description = trim($data['excerpt'] ?? '') ?: $plainContent;
+
+        $data['meta_title'] = trim($data['meta_title'] ?? '') ?: Str::limit(($data['title'] ?? $post?->title ?? '') . ' - TECOTECH', 60, '');
+        $data['meta_description'] = trim($data['meta_description'] ?? '') ?: Str::limit($description, 160, '');
+        $data['meta_keywords'] = trim($data['meta_keywords'] ?? '') ?: $this->keywordsFromTitle($data['title'] ?? $post?->title ?? '');
+        $data['og_image'] = trim($data['og_image'] ?? '') ?: $image;
+        $data['canonical_url'] = trim($data['canonical_url'] ?? '') ?: route('posts.show', $slug);
+        $data['meta_robots'] = trim($data['meta_robots'] ?? '') ?: 'index, follow';
+
+        return $data;
+    }
+
+    private function keywordsFromTitle(string $title): string
+    {
+        $words = collect(preg_split('/\s+/', Str::lower(Str::ascii($title))))
+            ->map(fn ($word) => trim($word, " \t\n\r\0\x0B,.;:!?()[]{}\"'"))
+            ->filter(fn ($word) => Str::length($word) >= 3)
+            ->unique()
+            ->take(8)
+            ->values()
+            ->all();
+
+        return implode(', ', array_filter([
+            implode(', ', $words),
+            'tecotech',
+        ]));
     }
 }

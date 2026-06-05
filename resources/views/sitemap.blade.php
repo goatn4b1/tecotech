@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
     <url>
         <loc>{{ $baseUrl }}/</loc>
         <lastmod>{{ now()->toAtomString() }}</lastmod>
@@ -58,6 +61,12 @@
         <lastmod>{{ $post->updated_at->toAtomString() }}</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
+        @if ($post->og_image || $post->image)
+            <image:image>
+                <image:loc>{{ $post->og_image ?: $post->image }}</image:loc>
+                <image:title>{{ $post->title }}</image:title>
+            </image:image>
+        @endif
     </url>
     @endforeach
 </urlset>

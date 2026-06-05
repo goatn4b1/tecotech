@@ -19,6 +19,15 @@ defineProps({
     image: String,
     canonical: String,
     robots: String,
+    type: {
+        type: String,
+        default: 'website',
+    },
+    siteName: String,
+    publishedTime: String,
+    modifiedTime: String,
+    section: String,
+    schema: Object,
 });
 
 const page = usePage();
@@ -45,6 +54,12 @@ const scrollTop = () => {
             :image="image" 
             :canonical="canonical" 
             :robots="robots"
+            :type="type"
+            :site-name="siteName"
+            :published-time="publishedTime"
+            :modified-time="modifiedTime"
+            :section="section"
+            :schema="schema"
         />
 
         <div class="min-h-screen bg-slate-50 flex flex-col font-sans">

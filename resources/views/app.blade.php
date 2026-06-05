@@ -12,6 +12,12 @@
             $metaImage = $seo_image ?? $page['props']['seoDefaults']['image'] ?? '';
             $metaCanonical = $seo_canonical ?? $page['props']['seoDefaults']['canonical'] ?? request()->url();
             $metaRobots = $seo_robots ?? $page['props']['seoDefaults']['robots'] ?? 'index, follow';
+            $metaType = $seo_type ?? 'website';
+            $metaSiteName = $seo_site_name ?? data_get($page, 'props.globalSettings.site_name', 'TECOTECH');
+            $metaPublishedTime = $seo_published_time ?? null;
+            $metaModifiedTime = $seo_modified_time ?? null;
+            $metaSection = $seo_section ?? null;
+            $schemaData = $seo_schema ?? null;
         @endphp
 
         <title inertia>{{ $metaTitle }}</title>
@@ -21,17 +27,32 @@
         <link rel="canonical" href="{{ $metaCanonical }}">
         
         <!-- Open Graph / Facebook / Zalo -->
-        <meta property="og:type" content="website">
+        <meta property="og:type" content="{{ $metaType }}">
+        <meta property="og:site_name" content="{{ $metaSiteName }}">
         <meta property="og:title" content="{{ $metaTitle }}">
         <meta property="og:description" content="{{ $metaDescription }}">
         <meta property="og:image" content="{{ $metaImage }}">
         <meta property="og:url" content="{{ $metaCanonical }}">
+        @if ($metaPublishedTime)
+            <meta property="article:published_time" content="{{ $metaPublishedTime }}">
+        @endif
+        @if ($metaModifiedTime)
+            <meta property="article:modified_time" content="{{ $metaModifiedTime }}">
+        @endif
+        @if ($metaSection)
+            <meta property="article:section" content="{{ $metaSection }}">
+        @endif
 
         <!-- Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="{{ $metaTitle }}">
         <meta name="twitter:description" content="{{ $metaDescription }}">
         <meta name="twitter:image" content="{{ $metaImage }}">
+        @if ($schemaData)
+            <script type="application/ld+json">
+                {!! json_encode($schemaData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+            </script>
+        @endif
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
