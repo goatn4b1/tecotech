@@ -61,6 +61,27 @@ class PageController extends Controller
         ]);
     }
 
+    public function product(string $slug)
+    {
+        $product = \App\Models\Product::with('category')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+        
+        return Inertia::render('ProductShow', [
+            'product' => $product,
+            'relatedProducts' => \App\Models\Product::with('category')
+                ->where('is_active', true)
+                ->where('id', '!=', $product->id)
+                ->latest()
+                ->limit(3)
+                ->get(),
+        ])->withViewData([
+            'seo_title' => $product->name . ' - TECOTECH',
+            'seo_description' => $product->excerpt ?: $this->excerpt($product->content),
+            'seo_image' => $this->absoluteUrl($product->image),
+            'seo_canonical' => url()->current(),
+            'seo_robots' => 'index, follow',
+        ]);
+    }
+
     private function excerpt(?string $value, int $limit = 160): string
     {
         return Str::limit(trim(preg_replace('/\s+/', ' ', strip_tags($value ?? ''))), $limit, '');

@@ -34,6 +34,16 @@ const settings = computed(() => page.props.globalSettings || {});
 const phoneDisplay = computed(() => settings.value.site_phone || '');
 const phoneHref = computed(() => `tel:${phoneDisplay.value.replace(/\s+/g, '')}`);
 
+const showCta = computed(() => settings.value.home_cta_active === undefined || settings.value.home_cta_active === '1');
+const ctaTitle = computed(() => settings.value.home_cta_title || 'Sẵn sàng triển khai giải pháp tối ưu cho doanh nghiệp của bạn?');
+const ctaDesc = computed(() => settings.value.home_cta_desc || 'Liên hệ với chuyên gia của chúng tôi để được tư vấn miễn phí về các giải pháp công nghệ môi trường và gia công cơ khí.');
+const ctaBg = computed(() => settings.value.home_cta_bg || 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80');
+
+const ctaBtn1Text = computed(() => settings.value.home_cta_btn1_text || 'Yêu cầu báo giá');
+const ctaBtn1Link = computed(() => settings.value.home_cta_btn1_link || '/lien-he');
+const ctaBtn2Text = computed(() => settings.value.home_cta_btn2_text || (phoneDisplay.value ? `Gọi ngay: ${phoneDisplay.value}` : ''));
+const ctaBtn2Link = computed(() => settings.value.home_cta_btn2_link || (phoneDisplay.value ? phoneHref.value : ''));
+
 const splitHeroTitle = (slide) => {
     const title = slide?.title || '';
     const highlight = slide?.highlight || '';
@@ -78,13 +88,17 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                             {{ section.data.slides[0].desc }}
                         </p>
                         <div class="pt-4 flex flex-wrap gap-4 md:pt-6">
-                            <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-8 md:px-10 font-bold group shadow-xl shadow-primary/30">
-                                Liên hệ ngay
+                            <component :is="(section.data.slides[0].btn1_link || '/lien-he').startsWith('http') ? 'a' : Link"
+                                       :href="section.data.slides[0].btn1_link || '/lien-he'" 
+                                       class="btn btn-primary btn-lg rounded-xl px-8 md:px-10 font-bold group shadow-xl shadow-primary/30">
+                                {{ section.data.slides[0].btn1_text || 'Liên hệ ngay' }}
                                 <ArrowRight class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                            <Link href="/gioi-thieu" class="btn bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border-white/20 hover:border-white/40 btn-lg rounded-xl px-8 md:px-10">
-                                Tìm hiểu thêm
-                            </Link>
+                            </component>
+                            <component :is="(section.data.slides[0].btn2_link || '/gioi-thieu').startsWith('http') ? 'a' : Link"
+                                       :href="section.data.slides[0].btn2_link || '/gioi-thieu'" 
+                                       class="btn bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border-white/20 hover:border-white/40 btn-lg rounded-xl px-8 md:px-10">
+                                {{ section.data.slides[0].btn2_text || 'Tìm hiểu thêm' }}
+                            </component>
                         </div>
                     </div>
                 </div>
@@ -167,10 +181,12 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                             </div>
 
                             <div class="pt-4">
-                                <Link href="/gioi-thieu" class="inline-flex items-center gap-2 text-primary font-bold group">
-                                    Khám phá câu chuyện của chúng tôi
+                                <component :is="(section.data.btn_link || '/gioi-thieu').startsWith('http') ? 'a' : Link"
+                                           :href="section.data.btn_link || '/gioi-thieu'" 
+                                           class="inline-flex items-center gap-2 text-primary font-bold group">
+                                    {{ section.data.btn_text || 'Khám phá câu chuyện của chúng tôi' }}
                                     <ArrowRight class="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                                </Link>
+                                </component>
                             </div>
                         </div>
                     </div>
@@ -188,9 +204,9 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                         <p class="text-slate-500 text-lg max-w-2xl mx-auto">{{ section.data.subtitle }}</p>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="flex flex-wrap justify-center gap-8">
                         <div v-for="service in section.data.items" :key="service.title" 
-                             class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100">
+                             class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-slate-100 w-full sm:w-[calc(50%-16px)] lg:w-[calc(25%-24px)] max-w-sm">
                             <div class="h-52 overflow-hidden relative">
                                 <img :src="service.image" :alt="service.title" class="h-full w-full object-cover transition duration-700 group-hover:scale-110">
                                 <div class="absolute inset-0 bg-slate-900/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -310,8 +326,8 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                         </h2>
                     </div>
 
-                    <div v-if="section.data.images?.length" class="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                        <div v-for="image in section.data.images" :key="image" class="flex h-24 items-center justify-center rounded-lg border border-slate-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                    <div v-if="section.data.images?.length" class="flex flex-wrap justify-center gap-6">
+                        <div v-for="image in section.data.images" :key="image" class="flex h-24 w-[160px] sm:w-[180px] items-center justify-center rounded-lg border border-slate-100 bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
                             <img :src="image" alt="Đối tác khách hàng TECOTECH" class="max-h-full max-w-full object-contain">
                         </div>
                     </div>
@@ -362,25 +378,30 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
         </section>
 
         <!-- CTA Section -->
-        <section class="relative py-24 bg-slate-900 overflow-hidden">
+        <section v-if="showCta" class="relative py-24 bg-slate-900 overflow-hidden">
             <div class="absolute inset-0 opacity-10 pointer-events-none">
-                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80" class="w-full h-full object-cover" />
+                <img :src="ctaBg" class="w-full h-full object-cover" />
             </div>
             <div class="container relative mx-auto px-4 text-center z-10">
                 <div class="max-w-4xl mx-auto space-y-10">
                     <h2 class="text-3xl md:text-5xl font-bold text-white leading-tight">
-                        Sẵn sàng triển khai giải pháp tối ưu cho doanh nghiệp của bạn?
+                        {{ ctaTitle }}
                     </h2>
                     <p class="text-slate-400 text-lg md:text-xl font-normal max-w-2xl mx-auto opacity-80">
-                        Liên hệ với chuyên gia của chúng tôi để được tư vấn miễn phí về các giải pháp công nghệ môi trường và gia công cơ khí.
+                        {{ ctaDesc }}
                     </p>
                     <div class="pt-6 flex justify-center gap-6 flex-wrap">
-                        <Link href="/lien-he" class="btn btn-primary btn-lg rounded-xl px-12 font-bold shadow-xl shadow-primary/30">
-                            Yêu cầu báo giá
-                        </Link>
-                        <a v-if="phoneDisplay" :href="phoneHref" class="btn bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border-white/10 hover:border-white/20 btn-lg rounded-xl px-12 font-bold">
-                            Gọi ngay: {{ phoneDisplay }}
-                        </a>
+                        <component :is="ctaBtn1Link.startsWith('http') ? 'a' : Link"
+                                   :href="ctaBtn1Link" 
+                                   class="btn btn-primary btn-lg rounded-xl px-12 font-bold shadow-xl shadow-primary/30">
+                            {{ ctaBtn1Text }}
+                        </component>
+                        <component v-if="ctaBtn2Text"
+                                   :is="ctaBtn2Link.startsWith('http') ? 'a' : Link"
+                                   :href="ctaBtn2Link" 
+                                   class="btn bg-white/5 hover:bg-white/10 backdrop-blur-md text-white border-white/10 hover:border-white/20 btn-lg rounded-xl px-12 font-bold">
+                            {{ ctaBtn2Text }}
+                        </component>
                     </div>
                 </div>
             </div>

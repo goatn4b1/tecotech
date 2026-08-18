@@ -45,6 +45,7 @@ const previews = ref({
     site_favicon: value('site_favicon', '/favicon.ico'),
     dmca_image: value('dmca_image'),
     home_og_image: value('home_og_image'),
+    home_cta_bg: value('home_cta_bg'),
 });
 
 const form = useForm({
@@ -70,6 +71,16 @@ const form = useForm({
     floating_back_to_top: value('floating_back_to_top', '1'),
     dmca_image: value('dmca_image'),
     dmca_image_upload: null,
+    // Home CTA
+    home_cta_active: value('home_cta_active', '1'),
+    home_cta_title: value('home_cta_title', 'Sẵn sàng triển khai giải pháp tối ưu cho doanh nghiệp của bạn?'),
+    home_cta_desc: value('home_cta_desc', 'Liên hệ với chuyên gia của chúng tôi để được tư vấn miễn phí về các giải pháp công nghệ môi trường và gia công cơ khí.'),
+    home_cta_bg: value('home_cta_bg'),
+    home_cta_bg_upload: null,
+    home_cta_btn1_text: value('home_cta_btn1_text', 'Yêu cầu báo giá'),
+    home_cta_btn1_link: value('home_cta_btn1_link', '/lien-he'),
+    home_cta_btn2_text: value('home_cta_btn2_text'),
+    home_cta_btn2_link: value('home_cta_btn2_link'),
     // Home SEO
     home_meta_title: value('home_meta_title'),
     home_meta_description: value('home_meta_description'),
@@ -250,6 +261,50 @@ const submit = () => {
                                 <label class="block text-sm font-medium text-gray-700">Mã nhúng Google Map (Iframe)</label>
                                 <textarea v-model="form.site_google_map" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder='<iframe src="..." ...></iframe>'></textarea>
                                 <p class="mt-1 text-xs text-gray-500 italic">Lấy mã nhúng từ Google Maps > Chia sẻ > Nhúng bản đồ.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="bg-white p-6 shadow-sm sm:rounded-lg">
+                        <h3 class="mb-5 text-lg font-bold text-gray-900">CTA Trang chủ (Khối kêu gọi hành động)</h3>
+                        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                            <div class="flex items-center md:col-span-2">
+                                <label class="flex items-center gap-2 text-sm font-medium text-gray-700 cursor-pointer">
+                                    <input v-model="form.home_cta_active" true-value="1" false-value="" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" />
+                                    Hiển thị khối CTA trên trang chủ
+                                </label>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Tiêu đề CTA</label>
+                                <input v-model="form.home_cta_title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-gray-700">Mô tả CTA</label>
+                                <textarea v-model="form.home_cta_desc" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">Ảnh nền CTA</label>
+                                <input type="file" accept="image/*" @change="selectImage($event, 'home_cta_bg_upload', 'home_cta_bg')" class="mt-1 block w-full text-sm text-gray-700" />
+                                <img v-if="previews.home_cta_bg" :src="previews.home_cta_bg" class="mt-3 h-24 w-auto rounded border object-cover" />
+                                <p class="mt-1 text-xs text-gray-500 italic">Dùng làm ảnh nền cho khối CTA. Nếu trống, sẽ dùng ảnh mặc định.</p>
+                            </div>
+                            <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Nút 1 - Chữ hiển thị</label>
+                                    <input v-model="form.home_cta_btn1_text" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Nút 1 - Đường dẫn (Link)</label>
+                                    <input v-model="form.home_cta_btn1_link" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Nút 2 - Chữ hiển thị (Bỏ trống dùng nút gọi tự động)</label>
+                                    <input v-model="form.home_cta_btn2_text" type="text" placeholder="Ví dụ: Gọi ngay: 0912..." class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700">Nút 2 - Đường dẫn (Link) (Bỏ trống dùng tel tự động)</label>
+                                    <input v-model="form.home_cta_btn2_link" type="text" placeholder="Ví dụ: tel:0912... hoặc /lien-he" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" />
+                                </div>
                             </div>
                         </div>
                     </section>

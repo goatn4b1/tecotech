@@ -138,6 +138,26 @@ const cancelEdit = () => {
                                     <input type="file" accept="image/*" @change="uploadImage($event, (url) => editingSection.data.slides[0].image = url)" class="mt-1 block w-full text-sm text-gray-700">
                                     <img v-if="editingSection.data.slides[0].image" :src="editingSection.data.slides[0].image" class="mt-2 h-20 rounded object-cover">
                                 </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nút 1 - Chữ hiển thị</label>
+                                        <input v-model="editingSection.data.slides[0].btn1_text" type="text" placeholder="Ví dụ: Liên hệ ngay" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nút 1 - Đường dẫn (Link)</label>
+                                        <input v-model="editingSection.data.slides[0].btn1_link" type="text" placeholder="Ví dụ: /lien-he" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 mt-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nút 2 - Chữ hiển thị</label>
+                                        <input v-model="editingSection.data.slides[0].btn2_text" type="text" placeholder="Ví dụ: Tìm hiểu thêm" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nút 2 - Đường dẫn (Link)</label>
+                                        <input v-model="editingSection.data.slides[0].btn2_link" type="text" placeholder="Ví dụ: /gioi-thieu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                </div>
                             </div>
 
                             <div v-if="editingSection.type === 'about'">
@@ -153,6 +173,16 @@ const cancelEdit = () => {
                                     <label class="block text-sm font-medium text-gray-700">Ảnh đại diện</label>
                                     <input type="file" accept="image/*" @change="uploadImage($event, (url) => editingSection.data.image = url)" class="mt-1 block w-full text-sm text-gray-700">
                                     <img v-if="editingSection.data.image" :src="editingSection.data.image" class="mt-2 h-20 rounded object-cover">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4 mt-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nút - Chữ hiển thị</label>
+                                        <input v-model="editingSection.data.btn_text" type="text" placeholder="Ví dụ: Khám phá câu chuyện của chúng tôi" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700">Nút - Đường dẫn (Link)</label>
+                                        <input v-model="editingSection.data.btn_link" type="text" placeholder="Ví dụ: /gioi-thieu" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                    </div>
                                 </div>
                             </div>
 

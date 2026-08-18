@@ -27,9 +27,7 @@ defineProps({
                 <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
                     {{ title }}
                 </h1>
-                <p v-if="subtitle" class="text-lg md:text-xl text-slate-300 font-normal max-w-2xl opacity-90 leading-relaxed">
-                    {{ subtitle }}
-                </p>
+
             </div>
         </div>
     </section>

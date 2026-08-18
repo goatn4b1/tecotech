@@ -66,23 +66,25 @@ const filteredProducts = computed(() => {
                     <article
                         v-for="product in filteredProducts"
                         :key="product.id"
-                        class="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+                        class="group overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl flex flex-col h-full"
                     >
-                        <div class="aspect-[16/10] overflow-hidden bg-slate-100">
+                        <Link :href="`/san-pham/${product.slug}`" class="aspect-[16/10] overflow-hidden bg-slate-100 block">
                             <img
                                 :src="product.image || 'https://cokhimoitruong.com.vn/storage/category-product/tm1_1728889805.webp'"
                                 :alt="product.name"
                                 class="h-full w-full object-cover transition duration-700 group-hover:scale-110"
                             >
-                        </div>
-                        <div class="space-y-3 p-6">
+                        </Link>
+                        <div class="space-y-3 p-6 flex flex-col flex-grow">
                             <div class="text-xs font-bold uppercase tracking-widest text-primary">
                                 {{ product.category?.name || 'Sản phẩm' }}
                             </div>
-                            <h2 class="text-xl font-bold leading-snug text-slate-900">{{ product.name }}</h2>
-                            <p class="line-clamp-3 text-sm leading-6 text-slate-600">{{ product.excerpt }}</p>
-                            <Link href="/lien-he" class="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-secondary">
-                                Liên hệ tư vấn <ArrowRight class="h-4 w-4" />
+                            <h2 class="text-xl font-bold leading-snug text-slate-900 line-clamp-2 min-h-[3.5rem] flex items-start">
+                                <Link :href="`/san-pham/${product.slug}`" class="hover:text-primary transition-colors">{{ product.name }}</Link>
+                            </h2>
+                            <p class="line-clamp-3 text-sm leading-6 text-slate-600 min-h-[4.5rem]">{{ product.excerpt }}</p>
+                            <Link :href="`/san-pham/${product.slug}`" class="inline-flex items-center gap-2 text-sm font-bold text-primary hover:text-secondary mt-auto pt-2">
+                                Xem chi tiết <ArrowRight class="h-4 w-4" />
                             </Link>
                         </div>
                     </article>

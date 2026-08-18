@@ -26,6 +26,7 @@ class SettingController extends Controller
             'site_favicon_upload' => 'site_favicon',
             'dmca_image_upload' => 'dmca_image',
             'home_og_image_upload' => 'home_og_image',
+            'home_cta_bg_upload' => 'home_cta_bg',
         ];
 
         foreach ($imageFields as $fileField => $settingKey) {

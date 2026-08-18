@@ -72,6 +72,8 @@ Route::get('/san-pham', function () {
     ]);
 })->name('products.index');
 
+Route::get('/san-pham/{slug}', [\App\Http\Controllers\PageController::class, 'product'])->name('products.show');
+
 Route::get('/tin-tuc', function () {
     $posts = \App\Models\Post::with('categoryRelation')->where('is_active', true)->orderBy('created_at', 'desc')->get();
 
