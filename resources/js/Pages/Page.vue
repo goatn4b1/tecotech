@@ -26,16 +26,16 @@ const contentWithToc = useContentToc(() => props.pageItem?.content || "", "muc")
             :backgroundImage="pageItem.hero_image || 'https://cokhimoitruong.com.vn/storage/setting/anh_1727924566.webp'"
         />
 
-        <section class="bg-white py-20">
+        <section class="bg-slate-50 py-16 md:py-20">
             <div class="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
 
-                <article class="lg:col-span-2 space-y-10">
+                <article class="space-y-8 lg:col-span-2">
                     <div class="lg:hidden">
                         <ContentToc :items="contentWithToc.items" title="Mục lục" variant="mobile" />
                     </div>
 
                     <div
-                        class="post-content"
+                        class="post-content rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 lg:p-10"
                         v-html="contentWithToc.html"
                     />
                 </article>
