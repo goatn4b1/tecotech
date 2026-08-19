@@ -109,7 +109,7 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                 <div class="container mx-auto px-4 py-12">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
                         <div class="text-center group">
-                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">1+</div>
+                            <div class="text-4xl font-bold text-slate-900 group-hover:text-primary transition-colors">5+</div>
                             <p class="text-slate-500 text-xs font-bold uppercase tracking-widest mt-2">Năm kinh nghiệm</p>
                         </div>
                         <div class="text-center group border-l border-slate-100">
@@ -136,12 +136,12 @@ const missionIconMap = { vision: Eye, mission: Rocket, goal: Target };
                             <div class="relative rounded-3xl overflow-hidden aspect-[4/3] shadow-2xl">
                                 <img :src="section.data.image" alt="Giới thiệu TECOTECH" class="w-full h-full object-cover">
                             </div>
-                            <div class="absolute -bottom-10 -right-10 bg-primary p-8 rounded-3xl shadow-xl hidden md:block">
+                            <!-- <div class="absolute -bottom-10 -right-10 bg-primary p-8 rounded-3xl shadow-xl hidden md:block">
                                 <div class="text-white text-center">
                                     <div class="text-sm font-medium opacity-80 uppercase tracking-widest mb-1">Thành lập</div>
                                     <div class="text-4xl font-bold">2025</div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="space-y-10">
                             <div class="space-y-4">
