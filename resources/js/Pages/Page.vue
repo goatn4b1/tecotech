@@ -35,7 +35,7 @@ const contentWithToc = useContentToc(() => props.pageItem?.content || "", "muc")
                     </div>
 
                     <div
-                        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary prose-img:rounded-lg"
+                        class="post-content"
                         v-html="contentWithToc.html"
                     />
                 </article>
