@@ -1,14 +1,18 @@
 <script setup>
-import InnerHero from '@/Components/InnerHero.vue';
-import MainLayout from '@/Layouts/MainLayout.vue';
+import InnerHero from "@/Components/InnerHero.vue";
+import MainLayout from "@/Layouts/MainLayout.vue";
+import ContentToc from "@/Components/ContentToc.vue";
+import { useContentToc } from "@/Composables/useContentToc";
 
 const props = defineProps({
     pageItem: Object,
 });
+
+const contentWithToc = useContentToc(() => props.pageItem?.content || "", "muc");
 </script>
 
 <template>
-    <MainLayout 
+    <MainLayout
         :title="pageItem.meta_title || (pageItem.title + ' - TECOTECH')"
         :description="pageItem.meta_description"
         :keywords="pageItem.meta_keywords"
@@ -22,9 +26,31 @@ const props = defineProps({
             :backgroundImage="pageItem.hero_image || 'https://cokhimoitruong.com.vn/storage/setting/anh_1727924566.webp'"
         />
 
-        <section class="bg-white py-14">
-            <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-                <article class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary prose-img:rounded-lg" v-html="pageItem.content"></article>
+        <section class="bg-white py-20">
+            <div class="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
+
+                <article class="lg:col-span-2 space-y-10">
+                    <div class="lg:hidden">
+                        <ContentToc :items="contentWithToc.items" title="Mục lục" variant="mobile" />
+                    </div>
+
+                    <div
+                        class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-a:text-primary prose-img:rounded-lg"
+                        v-html="contentWithToc.html"
+                    />
+                </article>
+
+                <aside class="lg:col-span-1">
+                    <div class="sticky top-28 space-y-6">
+                        <ContentToc class="hidden lg:block" :items="contentWithToc.items" title="Mục lục" />
+
+                        <div class="rounded-3xl bg-slate-900 p-8 text-white text-center space-y-6">
+                            <h3 class="text-xl font-bold">Bạn cần tư vấn?</h3>
+                            <p class="text-slate-400 text-sm font-normal">Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn.</p>
+                            <a href="/lien-he" class="btn btn-primary w-full rounded-xl font-bold">Liên hệ ngay</a>
+                        </div>
+                    </div>
+                </aside>
             </div>
         </section>
     </MainLayout>
