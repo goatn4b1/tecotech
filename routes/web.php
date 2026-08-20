@@ -138,3 +138,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/{slug}', [\App\Http\Controllers\PageController::class, 'show'])->where('slug', '^(?!admin|login|register|logout|storage).+');
+
+Route::fallback(function () {
+    return Inertia::render('NotFound')->toResponse(request())->setStatusCode(404);
+});
