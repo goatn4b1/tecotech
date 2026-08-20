@@ -108,21 +108,7 @@
 }
 
 .post-content p:has(> strong:only-child) strong {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
     color: #0f172a;
-}
-
-.post-content p:has(> strong:only-child) strong::before {
-    display: inline-block;
-    width: 0.55rem;
-    height: 0.55rem;
-    flex: 0 0 auto;
-    border-radius: 999px;
-    background: #059669;
-    box-shadow: 0 0 0 4px #d1fae5;
-    content: "";
 }
 
 .post-content ul,
