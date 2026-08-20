@@ -1,5 +1,6 @@
 <script setup>
 import ZaloIcon from '@/Components/ZaloIcon.vue';
+import { useActiveMenu } from '@/Composables/useActiveMenu';
 import { Link, usePage } from '@inertiajs/vue3';
 import {
     ChevronDown,
@@ -17,6 +18,7 @@ import { computed } from 'vue';
 const page = usePage();
 const settings = computed(() => page.props.globalSettings || {});
 const menus = computed(() => page.props.globalMenus || []);
+const { isActiveLink, isActiveMenu } = useActiveMenu(page);
 
 const phoneHref = computed(() => `tel:${(settings.value.site_phone || '').replace(/\s+/g, '')}`);
 const zaloLink = computed(() => {
@@ -75,13 +77,20 @@ const zaloLink = computed(() => {
                         <Link
                             v-if="!menu.children || menu.children.length === 0"
                             :href="menu.link"
-                            class="block px-4 py-3 text-[13px] font-bold uppercase tracking-wide text-slate-700 hover:text-primary"
+                            class="block rounded-xl px-4 py-3 text-[13px] font-bold uppercase tracking-wide transition"
+                            :class="isActiveMenu(menu) ? 'bg-primary/10 text-primary' : 'text-slate-700 hover:text-primary'"
+                            :aria-current="isActiveMenu(menu) ? 'page' : undefined"
                         >
                             {{ menu.name }}
                         </Link>
 
                         <div v-else>
-                            <button type="button" class="flex items-center px-4 py-3 text-[13px] font-bold uppercase tracking-wide text-slate-700 hover:text-primary">
+                            <button
+                                type="button"
+                                class="flex items-center rounded-xl px-4 py-3 text-[13px] font-bold uppercase tracking-wide transition"
+                                :class="isActiveMenu(menu) ? 'bg-primary/10 text-primary' : 'text-slate-700 hover:text-primary'"
+                                :aria-current="isActiveMenu(menu) ? 'page' : undefined"
+                            >
                                 {{ menu.name }}
                                 <ChevronDown class="ml-1 h-3.5 w-3.5 transition group-hover:rotate-180" />
                             </button>
@@ -91,7 +100,9 @@ const zaloLink = computed(() => {
                                         v-for="child in menu.children"
                                         :key="child.id"
                                         :href="child.link"
-                                        class="block border-l-4 border-transparent px-6 py-3 text-sm font-semibold text-slate-600 hover:border-primary hover:bg-slate-50 hover:text-primary"
+                                        class="block border-l-4 px-6 py-3 text-sm font-semibold transition"
+                                        :class="isActiveLink(child.link) ? 'border-primary bg-primary/5 text-primary' : 'border-transparent text-slate-600 hover:border-primary hover:bg-slate-50 hover:text-primary'"
+                                        :aria-current="isActiveLink(child.link) ? 'page' : undefined"
                                     >
                                         {{ child.name }}
                                     </Link>
@@ -141,13 +152,18 @@ const zaloLink = computed(() => {
                     <Link
                         v-if="!menu.children || menu.children.length === 0"
                         :href="menu.link"
-                        class="block py-4 text-sm font-bold uppercase tracking-wide text-slate-800"
+                        class="block py-4 text-sm font-bold uppercase tracking-wide"
+                        :class="isActiveMenu(menu) ? 'text-primary' : 'text-slate-800'"
+                        :aria-current="isActiveMenu(menu) ? 'page' : undefined"
                     >
                         {{ menu.name }}
                     </Link>
 
                     <details v-else class="group py-4">
-                        <summary class="flex cursor-pointer list-none items-center justify-between text-sm font-bold uppercase tracking-wide text-slate-800">
+                        <summary
+                            class="flex cursor-pointer list-none items-center justify-between text-sm font-bold uppercase tracking-wide"
+                            :class="isActiveMenu(menu) ? 'text-primary' : 'text-slate-800'"
+                        >
                             {{ menu.name }}
                             <ChevronDown class="h-4 w-4 transition group-open:rotate-180" />
                         </summary>
@@ -157,7 +173,9 @@ const zaloLink = computed(() => {
                                 v-for="child in menu.children"
                                 :key="child.id"
                                 :href="child.link"
-                                class="block rounded-r-lg px-3 py-3 text-sm font-semibold text-slate-600 hover:bg-slate-50 hover:text-primary"
+                                class="block rounded-r-lg px-3 py-3 text-sm font-semibold transition"
+                                :class="isActiveLink(child.link) ? 'bg-primary/10 text-primary' : 'text-slate-600 hover:bg-slate-50 hover:text-primary'"
+                                :aria-current="isActiveLink(child.link) ? 'page' : undefined"
                             >
                                 {{ child.name }}
                             </Link>
