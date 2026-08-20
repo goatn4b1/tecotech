@@ -2,7 +2,6 @@
 import InnerHero from '@/Components/InnerHero.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import ContentToc from '@/Components/ContentToc.vue';
-import ContentHtml from '@/Components/ContentHtml.vue';
 import { Link } from '@inertiajs/vue3';
 import { Calendar, Tag, ChevronRight } from 'lucide-vue-next';
 import { computed } from 'vue';
@@ -47,8 +46,8 @@ const contentWithToc = useContentToc(() => props.post?.content || '', 'noi-dung'
             :backgroundImage="post.image || 'https://cokhimoitruong.com.vn/storage/post/xu-ly-khi-thai-nha-may-giay-da-1_1729845974.webp'"
         />
 
-        <section class="bg-white py-16">
-            <div class="container mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 lg:grid-cols-3">
+        <section class="bg-slate-50 py-16 md:py-20">
+            <div class="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
                 <article class="space-y-8 lg:col-span-2">
                     <div class="flex flex-wrap items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">
                         <span class="inline-flex items-center gap-1.5 bg-primary/10 text-primary px-3 py-1 rounded-lg">
@@ -65,7 +64,7 @@ const contentWithToc = useContentToc(() => props.post?.content || '', 'noi-dung'
                         <ContentToc :items="contentWithToc.items" title="Mục lục bài viết" variant="mobile" />
                     </div>
 
-                    <ContentHtml :html="contentWithToc.html" />
+                    <div class="post-content rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 lg:p-10" v-html="contentWithToc.html"></div>
                 </article>
 
                 <aside class="lg:col-span-1">
