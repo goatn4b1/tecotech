@@ -1,7 +1,6 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import InnerHero from '@/Components/InnerHero.vue';
-import ContentHtml from '@/Components/ContentHtml.vue';
 import { Link } from '@inertiajs/vue3';
 import { ArrowRight, Tag, ArrowLeft, Phone } from 'lucide-vue-next';
 import { computed } from 'vue';
@@ -75,10 +74,11 @@ const seoImage = computed(() => props.product.image || '');
                         </p>
 
                         <!-- Description / Content -->
-                        <ContentHtml
+                        <div
                             v-if="product.content"
-                            :html="product.content"
-                        />
+                            class="post-content rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 lg:p-10"
+                            v-html="product.content"
+                        ></div>
 
                         <div v-else-if="!product.excerpt" class="rounded-xl border-2 border-dashed border-slate-200 p-10 text-center text-slate-400">
                             Chưa có mô tả cho sản phẩm này.
