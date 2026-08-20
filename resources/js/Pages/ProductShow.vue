@@ -1,6 +1,7 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import InnerHero from '@/Components/InnerHero.vue';
+import ContentHtml from '@/Components/ContentHtml.vue';
 import { Link } from '@inertiajs/vue3';
 import { ArrowRight, Tag, ArrowLeft, Phone } from 'lucide-vue-next';
 import { computed } from 'vue';
@@ -74,10 +75,9 @@ const seoImage = computed(() => props.product.image || '');
                         </p>
 
                         <!-- Description / Content -->
-                        <div
+                        <ContentHtml
                             v-if="product.content"
-                            class="prose prose-lg prose-slate max-w-none prose-headings:font-extrabold prose-headings:text-slate-900 prose-p:leading-8 prose-p:text-slate-700 prose-li:text-slate-700 prose-a:text-primary prose-img:rounded-xl prose-img:shadow-md"
-                            v-html="product.content"
+                            :html="product.content"
                         />
 
                         <div v-else-if="!product.excerpt" class="rounded-xl border-2 border-dashed border-slate-200 p-10 text-center text-slate-400">

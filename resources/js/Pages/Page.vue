@@ -2,6 +2,7 @@
 import InnerHero from "@/Components/InnerHero.vue";
 import MainLayout from "@/Layouts/MainLayout.vue";
 import ContentToc from "@/Components/ContentToc.vue";
+import ContentHtml from "@/Components/ContentHtml.vue";
 import { useContentToc } from "@/Composables/useContentToc";
 
 const props = defineProps({
@@ -26,18 +27,15 @@ const contentWithToc = useContentToc(() => props.pageItem?.content || "", "muc")
             :backgroundImage="pageItem.hero_image || 'https://cokhimoitruong.com.vn/storage/setting/anh_1727924566.webp'"
         />
 
-        <section class="bg-slate-50 py-16 md:py-20">
-            <div class="mx-auto grid max-w-7xl grid-cols-1 gap-16 px-4 sm:px-6 lg:grid-cols-3 lg:px-8">
+        <section class="bg-white py-16">
+            <div class="container mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 lg:grid-cols-3">
 
                 <article class="space-y-8 lg:col-span-2">
                     <div class="lg:hidden">
                         <ContentToc :items="contentWithToc.items" title="Mục lục" variant="mobile" />
                     </div>
 
-                    <div
-                        class="post-content rounded-3xl border border-slate-100 bg-white p-6 shadow-sm sm:p-8 lg:p-10"
-                        v-html="contentWithToc.html"
-                    />
+                    <ContentHtml :html="contentWithToc.html" />
                 </article>
 
                 <aside class="lg:col-span-1">
